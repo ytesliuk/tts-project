@@ -141,6 +141,45 @@ public class MySQLUserDao implements UserDao {
     }
 
     @Override
+    public List<User> findByLastName(String lastName, boolean partialMatch) {
+        List<User> users = new ArrayList<>();
+        try {
+            PreparedStatement statement;
+            statement = connection.prepareStatement(properties.getProperty(
+                    (partialMatch) ? "findUsersByLastNamePartialMatch" : "findUsersByLastName"));
+
+            statement.setString(1,"%" + lastName + "%");
+            statement.executeQuery();
+
+            ResultSet rs = statement.getResultSet();
+
+            while(rs.next()){
+                users.add(new UserMapper().mapping(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return users;
+    }
+
+    @Override
+    public List<User> findByDepartment(User.Department department) {
+        List<User> users = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(properties.getProperty("findUsersByDepartment"));
+            statement.setString(1,department.toString());
+
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+                users.add(new UserMapper().mapping(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return users;    }
+
+    @Override
     public void close() {
         try {
             connection.close();
