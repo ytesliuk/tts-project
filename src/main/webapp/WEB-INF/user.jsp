@@ -110,17 +110,21 @@
         </div>
     </div>
 </div>
-<!-- jQuery -->
-<script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
+<script type="text/javascript">
+    <%@include file="/resources/js/jquery.js"%>
+</script>
+<script type="text/javascript">
+    <%@include file="/resources/js/bootstrap.min.js"%>
+</script>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    <%@include file="/resources/js/plugins/metisMenu/metisMenu.min.js"%>
+</script>
 
-<!-- Metis Menu Plugin JavaScript -->
-<script src="${pageContext.request.contextPath}/resources/js/plugins/metisMenu/metisMenu.min.js"></script>
+<script type="text/javascript">
+    <%@include file="/resources/js/sb-admin-2.js"%>
+</script>
 
-<!-- Custom Theme JavaScript -->
-<script src="${pageContext.request.contextPath}/resources/js/sb-admin-2.js"></script>
 
 </body>
 

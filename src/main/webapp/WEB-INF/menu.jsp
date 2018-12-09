@@ -31,7 +31,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+            <a class="navbar-brand" href="index.html">TTS v1.0</a>
         </div>
         <!-- /.navbar-header -->
 
@@ -230,15 +230,9 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                 </a>
-                <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                    </li>
-                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
-                </ul>
+            <li>
+                <a href="${pageContext.request.contextPath}/logout">Logout</a>
+            </li>
                 <!-- /.dropdown-user -->
             </li>
             <!-- /.dropdown -->
@@ -250,7 +244,7 @@
                 <ul class="nav" id="side-menu">
                     <li class="sidebar-search">
                         <div class="input-group custom-search-form">
-                            <input type="text" class="form-control" placeholder="Search...">
+                            <input type="text" class="form-control" placeholder="Search task...">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">
                                     <i class="fa fa-search"></i>
@@ -260,49 +254,38 @@
                         <!-- /input-group -->
                     </li>
                     <li>
-                        <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        <a href="${pageContext.request.contextPath}/profile">Profile</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                        <a href="#"> Active tasks<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="flot.html">Flot Charts</a>
+                                <a href="#">Initiated</a>
                             </li>
                             <li>
-                                <a href="morris.html">Morris.js Charts</a>
+                                <a href="#">Assigned</a>
+                            </li>
+                            <li>
+                                <a href="#">Watched</a>
                             </li>
                         </ul>
-                        <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
-                    </li>
-                    <li>
-                        <a class="active" href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
+                        <a href="#"> Closed tasks<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="#">Second Level Item</a>
+                                <a href="#">Initiated</a>
                             </li>
                             <li>
-                                <a href="#">Second Level Item</a>
+                                <a href="#">Assigned</a>
+                            </li>
+                            <li>
+                                <a href="#">Watched</a>
                             </li>
                         </ul>
-                        <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="blank.html">Blank Page</a>
-                            </li>
-                            <li>
-                                <a href="login.html">Login Page</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
+                        <a href="forms.html"> Statistics</a>
                     </li>
                 </ul>
             </div>
