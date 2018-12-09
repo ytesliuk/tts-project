@@ -30,12 +30,12 @@ public class TaskUpdate extends TaskRecord {
         this.category = category;
     }
 
-    @Builder
     public TaskUpdate(TaskUpdate update){
         super(update.getId(),update.getTask(), Instant.now(), "", update.getRecorder());
         this.owner = update.getOwner();
         this.status = update.getStatus();
         this.category = update.getCategory();
+
     }
 
     @Override

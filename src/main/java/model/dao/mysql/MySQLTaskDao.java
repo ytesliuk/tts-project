@@ -25,8 +25,7 @@ public class MySQLTaskDao implements TaskDao {
         try {
             connection.setAutoCommit(false);
             setGeneralTaskInfo(task);
-            setChangeableTaskInfo(task.getLastUpdate());
-            updateTask(task);  //save the LastUpdate id to the task table
+            createTaskUpdate(task.getLastUpdate());
             setWatcher(task, task.getCreator());
 
             connection.commit();
@@ -61,8 +60,10 @@ public class MySQLTaskDao implements TaskDao {
     @Override
     public void createTaskUpdate(TaskUpdate record){
         try {
-            PreparedStatement taskOtherInfo = setChangeableTaskInfo(record);
-            taskOtherInfo.execute();
+            connection.setAutoCommit(false);
+            setChangeableTaskInfo(record);
+            updateTask(record.getTask());  //save the LastUpdate id to the task table
+            connection.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -233,6 +234,7 @@ public class MySQLTaskDao implements TaskDao {
         PreparedStatement updateTask = connection.prepareStatement(properties.getProperty("updateTask"));
         updateTask.setLong(1,entity.getLastUpdate().getId());
         updateTask.setLong(2,entity.getId());
+
         updateTask.execute();
     }
 

@@ -29,8 +29,9 @@ public class TaskMapper {
                             rs.getTimestamp("complete_time").toInstant() :
                             null) //TODO optional?
                     .creator(userMapper.mapping(rs))
-                    .lastUpdate(taskUpdateMapping(rs))
                     .build();
+             task.setLastUpdate(taskUpdateMapping(rs));
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -58,7 +59,7 @@ public class TaskMapper {
                 .build();
 
         setGeneralTaskRecordFields(tu,rs);
-
+        task.getId();
         return tu;
     }
 

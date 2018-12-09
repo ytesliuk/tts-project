@@ -1,6 +1,7 @@
 package controller.command;
 
 
+import model.entity.Task;
 import model.entity.User;
 import model.service.TaskService;
 
@@ -13,9 +14,9 @@ public class SearchUserCommand implements Command{
     @Override
     public String process(HttpServletRequest request) {
         search(request);
-        request.setAttribute("userList", searchResult);
+        request.getSession().setAttribute("userList", searchResult);
 
-        return "/WEB-INF/view/present.jsp";
+        return "redirect: /task-" + ((Task) request.getSession().getAttribute("task")).getId();
     }
 
     private void search(HttpServletRequest request) {

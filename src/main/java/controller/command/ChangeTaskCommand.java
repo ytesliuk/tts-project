@@ -16,6 +16,7 @@ public class ChangeTaskCommand implements Command {
         task = (Task)request.getSession().getAttribute("task");
 
         getTaskUpdateFromRequest(request);
+        task.setLastUpdate(update);
         new TaskService().saveTaskUpdate(update);
 
         return "redirect: /task-" + task.getId();
@@ -23,7 +24,7 @@ public class ChangeTaskCommand implements Command {
 
     private TaskUpdate getTaskUpdateFromRequest(HttpServletRequest request) {
 
-        update = TaskUpdate.builder().update(task.getLastUpdate()).build();
+        update = new TaskUpdate(task.getLastUpdate());
         Optional.ofNullable(request.getParameter("comment")).ifPresent(update::setComment);
         Optional.ofNullable(request.getParameter("category")).ifPresent(update::setCategory);
         Optional.ofNullable(request.getParameter("status")).ifPresent(x -> update.setStatus(TaskUpdate.Status.valueOf(x)));
