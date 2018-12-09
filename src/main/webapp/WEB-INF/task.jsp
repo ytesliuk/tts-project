@@ -45,92 +45,89 @@
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <button type="button" class="btn btn-primary" data-toggle="collapse"
-                                                        data-parent="#accordion" href="#assign">Assign
+                                                        data-parent="#accordion" href="#assign">Assignee
                                                 </button>
                                                 <button type="button" class="btn btn-primary" data-toggle="collapse"
-                                                        data-parent="#accordion" href="#edit">Edit task
+                                                        data-parent="#accordion" href="#category">Category
                                                 </button>
                                                 <button type="button" class="btn btn-primary" data-toggle="collapse"
                                                         data-parent="#accordion" href="#worklog">Work log
                                                 </button>
                                                 <button type="button" class="btn btn-primary" data-toggle="collapse"
-                                                        data-parent="#accordion" href="#status">Change status
+                                                        data-parent="#accordion" href="#status">Status
                                                 </button>
                                             </h4>
                                         </div>
-                                        <form method="post" action="${pageContext.request.contextPath}/assign">
-                                            <div id="assign" class="panel-collapse collapse">
-                                                <%--<form method="post"--%>
-                                                      <%--action="${pageContext.request.contextPath}/searchUser">--%>
-                                                    <div class="panel-body">
-                                                        <label class="radio-inline">
-                                                            <input type="radio" name="searchCriteria"
-                                                                   value="byDepartment">
-                                                            <div class="form-group">
-                                                                <select class="form-control">
-                                                                    <option>All departments</option>
-                                                                    <option>OPR</option>
-                                                                    <option>IT</option>
-                                                                </select>
-                                                            </div>
-                                                        </label>
-                                                        <label class="radio-inline">
-                                                            <input type="radio" name="searchCriteria" value="byName"
-                                                                   checked>
-                                                            <div class="form-group">
-                                                                <input class="form-control" placeholder="Search name..."
-                                                                       name="name">
-                                                            </div>
-                                                        </label>
-                                                        <button type="submit" class="btn btn-primary btn-lg btn-block">
-                                                            Search
-                                                        </button>
-                                                    </div>
-                                                <%--</form>--%>
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Name</th>
-                                                        <th>Department</th>
-                                                        <th>Position</th>
-                                                        <th></th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <c:forEach var="user" items="${sessionScope.userList}">
-                                                        <tr>
-                                                            <td><c:out value="${user.lastName}"/></td>
-                                                            <td><c:out value="${user.department}"/></td>
-                                                            <td><c:out value="${user.position}"/></td>
-                                                            <td>
-                                                                <button type="button" name="assignee" value="${user.id}"
-                                                                        class="btn btn-default btn-circle"></button>
-                                                            </td>
-
-                                                        </tr>
-                                                    </c:forEach>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div id="edit" class="panel-collapse collapse">
+                                        <div id="assign" class="panel-collapse collapse">
+                                            <form method="post"
+                                                  action="${pageContext.request.contextPath}/searchUser">
                                                 <div class="panel-body">
-                                                    <label>Category:
-                                                        <select class="form-control" name="category">
-                                                            <option selected><c:out
-                                                                    value="${sessionScope.task.lastUpdate.category}"/></option>
-                                                            <option>Category</option>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="searchCriteria"
+                                                               value="byDepartment">
+                                                        <select class="form-control">
+                                                            <option>All departments</option>
                                                             <option>OPR</option>
                                                             <option>IT</option>
                                                         </select>
                                                     </label>
-                                                    <label class="radio-inline">Priority
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="searchCriteria" value="byName"
+                                                               checked>
+                                                        <input class="form-control" placeholder="Search name..."
+                                                               name="name">
                                                     </label>
+                                                    <br/><br/>
+                                                    <button type="submit" class="btn btn-outline btn-primary btn-block">
+                                                        Search
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <form method="post"
+                                              action="${pageContext.request.contextPath}/assign">
+                                            <input type="hidden" name="list" value="toAssign">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Department</th>
+                                                    <th>Position</th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <c:forEach var="user" items="${sessionScope.userListAssign}">
+                                                    <tr>
+                                                        <td><c:out value="${user.lastName}"/></td>
+                                                        <td><c:out value="${user.department}"/></td>
+                                                        <td><c:out value="${user.position}"/></td>
+                                                        <td>
+                                                            <button type="button" name="assignee"
+                                                                    value="${user.id}"
+                                                                    class="btn btn-default btn-circle"></button>
+                                                        </td>
+
+                                                    </tr>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
+                                            <div id="category" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <select class="form-control" name="category">
+                                                        <option selected><c:out
+                                                                value="${sessionScope.task.lastUpdate.category}"/></option>
+                                                        <option>Category</option>
+                                                        <option>OPR</option>
+                                                        <option>IT</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div id="worklog" class="panel-collapse collapse">
                                                 <div class="panel-body">
                                                     <label>Time(min):
-                                                        <input class="form-control" placeholder="" name="duration">
+                                                        <input class="form-control" name="duration">
                                                     </label>
                                                     <br>
                                                     <div lass="col-lg-12">
@@ -153,9 +150,66 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <button type="submit" class="btn btn-success">Save changes</button>
+                                                <button type="submit" class="btn btn-success">Save</button>
                                             </div>
                                         </form>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-primary" data-toggle="collapse"
+                                        data-parent="#accordion" href="#watcher">Add watcher
+                                </button>
+                                <div id="watcher" class="panel-collapse collapse">
+                                    <form method="post"
+                                          action="${pageContext.request.contextPath}/searchUser">
+                                        <input type="hidden" name="list" value="toWatch">
+                                        <div class="panel-body">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="searchCriteria"
+                                                       value="byDepartment">
+                                                <select class="form-control">
+                                                    <option>All departments</option>
+                                                    <option>OPR</option>
+                                                    <option>IT</option>
+                                                </select>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="searchCriteria" value="byName"
+                                                       checked>
+                                                <input class="form-control" placeholder="Search name..."
+                                                       name="name">
+                                            </label>
+                                            <br/><br/>
+                                            <button type="submit" class="btn btn-outline btn-primary btn-block">
+                                                Search
+                                            </button>
+                                        </div>
+                                    </form>
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Department</th>
+                                            <th>Position</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach var="user" items="${sessionScope.userListWatch}">
+                                            <tr>
+                                                <td><c:out value="${user.lastName}"/></td>
+                                                <td><c:out value="${user.department}"/></td>
+                                                <td><c:out value="${user.position}"/></td>
+                                                <td>
+                                                    <button type="button" name="assignee" value="${user.id}"
+                                                            class="btn btn-default btn-circle"></button>
+                                                </td>
+
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
+                                    <div>
+                                        <button type="submit" class="btn btn-success">Add</button>
                                     </div>
                                 </div>
 
@@ -187,14 +241,14 @@
                                     <ul class="nav nav-tabs">
                                         <li class="active"><a href="#comment" data-toggle="tab">Comment</a>
                                         </li>
-                                        <li><a href="#profile" data-toggle="tab">Profile</a>
+                                        <li><a href="#history" data-toggle="tab">History</a>
                                         </li>
                                     </ul>
 
                                     <!-- Tab panes -->
                                     <div class="tab-content">
                                         <div class="tab-pane fade in active" id="comment">
-                                            <h3>Comments</h3>
+                                            </br>
                                             <c:forEach var="comment" items="${requestScope.comments}">
                                                 <p><c:out value="${comment.recorder.lastName}"/> <c:out
                                                         value="${comment.recordTime}"/></p>
@@ -202,8 +256,9 @@
                                                         value="${comment.comment}"/></textarea>
                                             </c:forEach>
                                         </div>
-                                        <div class="tab-pane fade" id="profile">
-                                            <h4>Profile Tab</h4>
+                                        <div class="tab-pane fade" id="history">
+                                            </br>
+
                                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                                                 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
                                                 veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
