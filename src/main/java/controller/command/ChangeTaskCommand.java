@@ -33,7 +33,7 @@ public class ChangeTaskCommand implements Command {
                 .filter( (u)-> u.getId() == Long.parseLong(x))
                 .findFirst().get()));
         Optional.ofNullable(request.getParameter("duration")).ifPresent(x -> update.setSpentTime(
-                Duration.ofMinutes(Long.parseLong(x))));
+                (x.length() > 0) ? Duration.ofMinutes(Long.parseLong(x)) : null));
 
         return update;
     }
