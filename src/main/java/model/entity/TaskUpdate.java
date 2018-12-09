@@ -2,6 +2,7 @@ package model.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -10,6 +11,7 @@ import java.time.Instant;
  * @author Yuliia Tesliuk
  */
 @Getter
+@Setter
 public class TaskUpdate extends TaskRecord {
     public enum Status{OPEN,REOPEN,ASSIGNED, IN_PROGRESS,RESOLVED,CLOSED,ON_HOLD}
 
@@ -26,6 +28,14 @@ public class TaskUpdate extends TaskRecord {
         this.status = status;
         this.spentTime = spentTime;
         this.category = category;
+    }
+
+    @Builder
+    public TaskUpdate(TaskUpdate update){
+        super(update.getId(),update.getTask(), Instant.now(), "", update.getRecorder());
+        this.owner = update.getOwner();
+        this.status = update.getStatus();
+        this.category = update.getCategory();
     }
 
     @Override
