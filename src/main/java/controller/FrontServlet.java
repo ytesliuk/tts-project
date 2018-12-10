@@ -34,6 +34,7 @@ public class FrontServlet extends HttpServlet {
         commands.put("create", new SaveTaskCommand());
         commands.put("searchUser",new SearchUserCommand());
         commands.put("assign", new ChangeTaskCommand());
+        commands.put("addWatcher", new AddWatcherCommand());
         //TODO: add new commands to map
     }
 

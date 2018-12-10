@@ -61,6 +61,7 @@
                                         <div id="assign" class="panel-collapse collapse">
                                             <form method="post"
                                                   action="${pageContext.request.contextPath}/searchUser">
+                                                <input type="hidden" name="searchList" value="userListAssign">
                                                 <div class="panel-body">
                                                     <label class="radio-inline">
                                                         <input type="radio" name="searchCriteria"
@@ -83,11 +84,6 @@
                                                     </button>
                                                 </div>
                                             </form>
-                                        </div>
-
-                                        <form method="post"
-                                              action="${pageContext.request.contextPath}/assign">
-                                            <input type="hidden" name="list" value="toAssign">
                                             <table class="table table-hover">
                                                 <thead>
                                                 <tr>
@@ -113,7 +109,9 @@
                                                 </c:forEach>
                                                 </tbody>
                                             </table>
-                                            <div id="category" class="panel-collapse collapse">
+                                        </div>
+
+                                        <div id="category" class="panel-collapse collapse">
                                                 <div class="panel-body">
                                                     <select class="form-control" name="category">
                                                         <option selected><c:out
@@ -161,7 +159,7 @@
                                 <div id="watcher" class="panel-collapse collapse">
                                     <form method="post"
                                           action="${pageContext.request.contextPath}/searchUser">
-                                        <input type="hidden" name="list" value="toWatch">
+                                        <input type="hidden" name="searchList" value="userListWatch">
                                         <div class="panel-body">
                                             <label class="radio-inline">
                                                 <input type="radio" name="searchCriteria"
@@ -184,6 +182,8 @@
                                             </button>
                                         </div>
                                     </form>
+                                <form method="post"
+                                      action="${pageContext.request.contextPath}/addWatcher">
                                     <table class="table table-hover">
                                         <thead>
                                         <tr>
@@ -200,17 +200,17 @@
                                                 <td><c:out value="${user.department}"/></td>
                                                 <td><c:out value="${user.position}"/></td>
                                                 <td>
-                                                    <button type="button" name="assignee" value="${user.id}"
-                                                            class="btn btn-default btn-circle"></button>
+                                                    <div>
+                                                        <button type="submit" class="btn btn-success" name="watcher" value="${user.id}">Add</button>
+                                                    </div>
                                                 </td>
 
                                             </tr>
                                         </c:forEach>
                                         </tbody>
                                     </table>
-                                    <div>
-                                        <button type="submit" class="btn btn-success">Add</button>
-                                    </div>
+
+                                </form>
                                 </div>
 
                                 <p class="form-control-static"><c:out value="${sessionScope.task.title}"/></p>

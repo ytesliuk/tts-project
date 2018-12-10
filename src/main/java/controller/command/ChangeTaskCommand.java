@@ -1,5 +1,6 @@
 package controller.command;
 
+import controller.ServletUtility;
 import model.entity.*;
 import model.service.TaskService;
 
@@ -18,6 +19,8 @@ public class ChangeTaskCommand implements Command {
         getTaskUpdateFromRequest(request);
         task.setLastUpdate(update);
         new TaskService().saveTaskUpdate(update);
+
+        ServletUtility.cleanSession(request.getSession(),SessionAttributeRetention.FULL_REQUEST);
 
         return "redirect: /task-" + task.getId();
     }
