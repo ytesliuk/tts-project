@@ -36,8 +36,8 @@ public class ChangeTaskCommand implements Command {
         Optional.ofNullable(request.getParameter("status")).ifPresent(x -> update.setStatus(TaskUpdate.Status.valueOf(x)));
         Optional.ofNullable(request.getParameter("assignee")).ifPresent(x -> update.setOwner(
                 ((List<User>)request.getSession().getAttribute("userList")).stream()
-                .filter( (u)-> u.getId() == Long.parseLong(x))
-                .findFirst().get()));
+                        .filter( (u)-> u.getId() == Long.parseLong(x))
+                        .findFirst().get()));
         Optional.ofNullable(request.getParameter("duration")).ifPresent(x -> update.setSpentTime(
                 (x.length() > 0) ? Duration.ofMinutes(Long.parseLong(x)) : null));
 

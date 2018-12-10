@@ -93,11 +93,11 @@
                                               action="${pageContext.request.contextPath}/servlet/assign">
                                             <table class="table table-hover">
                                                 <c:if test="${sessionScope.userListAssign != null}">
-<<<<<<< HEAD
+                                                    <<<<<<< HEAD
                                                     <thead>
-=======
-                                                     <thead>
->>>>>>> view
+                                                    =======
+                                                    <thead>
+                                                    >>>>>>> view
                                                     <tr>
                                                         <th>Name</th>
                                                         <th>Department</th>
