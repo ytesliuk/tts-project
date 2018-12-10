@@ -14,7 +14,7 @@ public class TaskListCommand implements Command {
 
         request.setAttribute("taskList", setTaskLists(request));
 
-        return "/WEB-INF/user.jsp";
+        return "/WEB-INF/taskList.jsp";
     }
 
     private List<Task> setTaskLists(HttpServletRequest request) {

@@ -48,7 +48,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach var="task" items="${requestScope.assignedTask}">
+                                    <c:forEach var="task" items="${requestScope.taskList}">
                                     <tr class="odd gradeX">
                                         <td><a href="${pageContext.request.contextPath}/servlet/task-${task.id}"><c:out
                                                 value="${task.id}"/></a></td>
