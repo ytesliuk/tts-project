@@ -1,6 +1,6 @@
 package controller;
 
-import controller.command.SessionAttributeRetention;
+import controller.SessionAttributeRetention;
 import model.entity.User;
 import model.entity.User.Role;
 

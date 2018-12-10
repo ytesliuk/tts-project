@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 
 
 <html>
@@ -34,7 +36,6 @@
         <div class="col-lg-12">
             <div class="row">
                 <div class="col-lg-12">
-                    <%--<div class="panel panel-default">--%>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
@@ -59,6 +60,7 @@
                                                 </button>
                                             </h4>
                                         </div>
+
                                         <div id="assign" class="panel-collapse collapse">
                                             <form method="post"
                                                   action="${pageContext.request.contextPath}/servlet/searchUser">
@@ -80,15 +82,17 @@
                                                                name="name">
                                                     </label>
                                                     <br/><br/>
-                                                    <button type="submit" class="btn btn-outline btn-primary btn-block">
+                                                    <button type="submit"
+                                                            class="btn btn-outline btn-primary btn-block">
                                                         Search
                                                     </button>
                                                 </div>
                                             </form>
-
-                                            <form method="post"
-                                                  action="${pageContext.request.contextPath}/servlet/assign">
-                                                <table class="table table-hover">
+                                        </div>
+                                        <form method="post"
+                                              action="${pageContext.request.contextPath}/servlet/assign">
+                                            <table class="table table-hover">
+                                                <c:if test="${sessionScope.userListAssign != null}">
                                                     <thead>
                                                     <tr>
                                                         <th>Name</th>
@@ -97,102 +101,72 @@
                                                         <th></th>
                                                     </tr>
                                                     </thead>
-                                                    <tbody>
-                                                    <c:forEach var="user" items="${sessionScope.userListAssign}">
-                                                        <tr>
-                                                            <td><c:out value="${user.lastName}"/></td>
-                                                            <td><c:out value="${user.department}"/></td>
-                                                            <td><c:out value="${user.position}"/></td>
-                                                            <td>
-                                                                <button type="button" name="assignee"
-                                                                        value="${user.id}"
-                                                                        class="btn btn-default btn-circle"></button>
-                                                            </td>
+                                                </c:if>
+                                                <tbody>
+                                                <c:forEach var="user" items="${sessionScope.userListAssign}">
+                                                    <tr>
+                                                        <td><c:out value="${user.lastName}"/></td>
+                                                        <td><c:out value="${user.department}"/></td>
+                                                        <td><c:out value="${user.position}"/></td>
+                                                        <td>
+                                                            <button type="button" name="assignee"
+                                                                    value="${user.id}"
+                                                                    class="btn btn-default btn-circle"></button>
+                                                        </td>
 
-                                                        </tr>
-                                                    </c:forEach>
-                                                    </tbody>
-                                                </table>
+                                                    </tr>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
 
-                                                <div id="category" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        <select class="form-control" name="category">
-                                                            <option selected><c:out
-                                                                    value="${sessionScope.task.lastUpdate.category}"/></option>
-                                                            <option>Category</option>
-                                                            <option>OPR</option>
-                                                            <option>IT</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div id="worklog" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        <label>Time(min):
-                                                            <input class="form-control" name="duration">
-                                                        </label>
-                                                        <br>
-                                                        <div lass="col-lg-12">
-                                                            <label>Comment: </label>
-                                                            <textarea class="form-control" rows="2"
-                                                                      name="comment"></textarea>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="status" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        <select class="form-control" name="status">
-                                                            <option selected><c:out
-                                                                    value="${sessionScope.task.lastUpdate.status}"/></option>
-                                                            <option>Category</option>
-                                                            <option>OPR</option>
-                                                            <option>IT</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <button type="submit" class="btn btn-success">Save</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-primary" data-toggle="collapse"
-                                            data-parent="#accordion" href="#watcher">Add watcher
-                                    </button>
-                                    <div id="watcher" class="panel-collapse collapse">
-                                        <form method="post"
-                                              action="${pageContext.request.contextPath}/servlet/searchUser">
-                                            <input type="hidden" name="searchList" value="userListWatch">
-                                            <div class="panel-body">
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="searchCriteria"
-                                                           value="byDepartment">
-                                                    <select class="form-control">
-                                                        <option>All departments</option>
+                                            <div id="category" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <select class="form-control" name="category">
+                                                        <option selected><c:out
+                                                                value="${sessionScope.task.lastUpdate.category}"/></option>
+                                                        <option>Category</option>
                                                         <option>OPR</option>
                                                         <option>IT</option>
                                                     </select>
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="searchCriteria" value="byName"
-                                                           checked>
-                                                    <input class="form-control" placeholder="Search name..."
-                                                           name="name">
-                                                </label>
-                                                <br/><br/>
-                                                <button type="submit" class="btn btn-outline btn-primary btn-block">
-                                                    Search
-                                                </button>
+                                                </div>
+                                            </div>
+                                            <div id="worklog" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <label>Time(min):
+                                                        <input class="form-control" name="duration">
+                                                    </label>
+                                                    <br>
+                                                    <div lass="col-lg-12">
+                                                        <label>Comment: </label>
+                                                        <textarea class="form-control" rows="2"
+                                                                  name="comment"></textarea>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="status" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <select class="form-control" name="status">
+                                                        <option selected><c:out
+                                                                value="${sessionScope.task.lastUpdate.status}"/></option>
+                                                        <option>Category</option>
+                                                        <option>OPR</option>
+                                                        <option>IT</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <button type="submit" class="btn btn-success">Save</button>
                                             </div>
                                         </form>
-                                        <form method="post"
-                                              action="${pageContext.request.contextPath}/servlet/addWatcher">
+                                    </div>
+                                </div>
                                 <button type="button" class="btn btn-primary" data-toggle="collapse"
                                         data-parent="#accordion" href="#watcher">Add watcher
                                 </button>
                                 <div id="watcher" class="panel-collapse collapse">
                                     <form method="post"
-                                          action="${pageContext.request.contextPath}/searchUser">
+                                          action="${pageContext.request.contextPath}/servlet/searchUser">
                                         <input type="hidden" name="searchList" value="userListWatch">
                                         <div class="panel-body">
                                             <label class="radio-inline">
@@ -211,40 +185,45 @@
                                                        name="name">
                                             </label>
                                             <br/><br/>
+
                                             <button type="submit" class="btn btn-outline btn-primary btn-block">
                                                 Search
                                             </button>
                                         </div>
                                     </form>
-                                <form method="post"
-                                      action="${pageContext.request.contextPath}/addWatcher">
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Department</th>
-                                            <th>Position</th>
-                                            <th></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <c:forEach var="user" items="${sessionScope.userListWatch}">
-                                            <tr>
-                                                <td><c:out value="${user.lastName}"/></td>
-                                                <td><c:out value="${user.department}"/></td>
-                                                <td><c:out value="${user.position}"/></td>
-                                                <td>
-                                                    <div>
-                                                        <button type="submit" class="btn btn-success" name="watcher" value="${user.id}">Add</button>
-                                                    </div>
-                                                </td>
 
-                                            </tr>
-                                        </c:forEach>
-                                        </tbody>
-                                    </table>
+                                    <form method="post"
+                                          action="${pageContext.request.contextPath}/servlet/addWatcher">
+                                        <table class="table table-hover">
+                                            <c:if test="${sessionScope.userListWatch != null}">
+                                                <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Department</th>
+                                                    <th>Position</th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                            </c:if>
+                                            <c:forEach var="user" items="${sessionScope.userListWatch}">
+                                                <tr>
+                                                    <td><c:out value="${user.lastName}"/></td>
+                                                    <td><c:out value="${user.department}"/></td>
+                                                    <td><c:out value="${user.position}"/></td>
+                                                    <td>
+                                                        <div>
+                                                            <button type="submit" class="btn btn-success"
+                                                                    name="watcher" value="${user.id}">Add
+                                                            </button>
+                                                        </div>
+                                                    </td>
 
-                                </form>
+                                                </tr>
+                                            </c:forEach>
+                                            </tbody>
+                                        </table>
+
+                                    </form>
                                 </div>
                                 <p class="form-control-static"><c:out value="${sessionScope.task.title}"/></p>
 
@@ -305,13 +284,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- /.panel-body -->
-                                <%--</div>--%>
                             </div>
-
                         </div>
                     </div>
-                    <%--</div>--%>
                 </div>
             </div>
         </div>

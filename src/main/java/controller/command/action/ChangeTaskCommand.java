@@ -2,7 +2,7 @@ package controller.command.action;
 
 import controller.*;
 import controller.command.*;
-import controller.command.SessionAttributeRetention;
+import controller.SessionAttributeRetention;
 import model.entity.*;
 import model.service.TaskService;
 

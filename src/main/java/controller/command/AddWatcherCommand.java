@@ -1,6 +1,7 @@
 package controller.command;
 
 import controller.ServletUtility;
+import controller.SessionAttributeRetention;
 import model.entity.Task;
 import model.service.TaskService;
 
@@ -15,7 +16,7 @@ public class AddWatcherCommand implements Command {
 
         new TaskService().addWatcher(task, watcherId);
 
-        ServletUtility.cleanSession(request.getSession(),SessionAttributeRetention.FULL_REQUEST);
+        ServletUtility.cleanSession(request.getSession(), SessionAttributeRetention.FULL_REQUEST);
 
         return "redirect: /task-" + task.getId();
     }
