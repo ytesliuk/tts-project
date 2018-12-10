@@ -260,13 +260,13 @@
                         <a href="#"> Active tasks<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="#">Initiated</a>
+                                <a href="${pageContext.request.contextPath}/servlet/task_list?tl=initiated">Initiated</a>
                             </li>
                             <li>
-                                <a href="#">Assigned</a>
+                                <a href="${pageContext.request.contextPath}/servlet/task_list?tl=assigned">Assigned</a>
                             </li>
                             <li>
-                                <a href="#">Watched</a>
+                                <a href="${pageContext.request.contextPath}/servlet/task_list?tl=watched">Watched</a>
                             </li>
                         </ul>
                     </li>
@@ -274,13 +274,13 @@
                         <a href="#"> Closed tasks<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="#">Initiated</a>
+                                <a href="${pageContext.request.contextPath}/servlet/task_list?tl=initiatedClosed">Initiated</a>
                             </li>
                             <li>
-                                <a href="#">Assigned</a>
+                                <a href="${pageContext.request.contextPath}/servlet/task_list?tl=assignedClosed">Assigned</a>
                             </li>
                             <li>
-                                <a href="#">Watched</a>
+                                <a href="${pageContext.request.contextPath}/servlet/task_list?tl=watchedClosed">Watched</a>
                             </li>
                         </ul>
                     </li>

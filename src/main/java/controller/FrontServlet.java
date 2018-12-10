@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @WebServlet("/servlet/*")
 public class FrontServlet extends HttpServlet {
-    private Map<String, Command> commands = new ConcurrentHashMap<>();
+    private final Map<String, Command> commands = new ConcurrentHashMap<>();
     private static ServletContext context;
 
     @Override
@@ -37,6 +37,8 @@ public class FrontServlet extends HttpServlet {
         commands.put("searchUser",new SearchUserCommand());
         commands.put("assign", new ChangeTaskCommand());
         commands.put("addWatcher", new AddWatcherCommand());
+        commands.put("task_list", new TaskListCommand());
+
         //TODO: add new commands to map
     }
 
