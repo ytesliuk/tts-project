@@ -1,7 +1,9 @@
-package controller.command;
+package controller.command.action;
 
 
 import controller.ServletUtility;
+import controller.command.Command;
+import controller.command.SessionAttributeRetention;
 import model.entity.Task;
 import model.entity.User;
 import model.service.TaskService;
@@ -9,7 +11,7 @@ import model.service.TaskService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class SearchUserCommand implements Command{
+public class SearchUserCommand implements Command {
     private  List<User> searchResult;
 
     @Override
