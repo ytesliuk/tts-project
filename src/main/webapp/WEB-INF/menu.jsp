@@ -231,7 +231,7 @@
                     <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                 </a>
             <li>
-                <a href="${pageContext.request.contextPath}/logout">Logout</a>
+                <a href="${pageContext.request.contextPath}/servlet/logout">Logout</a>
             </li>
                 <!-- /.dropdown-user -->
             </li>
@@ -254,7 +254,7 @@
                         <!-- /input-group -->
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath}/profile">Profile</a>
+                        <a href="${pageContext.request.contextPath}/servlet/profile">Profile</a>
                     </li>
                     <li>
                         <a href="#"> Active tasks<span class="fa arrow"></span></a>

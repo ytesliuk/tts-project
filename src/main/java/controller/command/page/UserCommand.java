@@ -1,6 +1,7 @@
-package controller.command;
+package controller.command.page;
 
 import controller.ServletUtility;
+import controller.command.Command;
 import model.entity.Task;
 import model.service.TaskService;
 import model.service.UserService;

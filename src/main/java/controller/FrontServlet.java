@@ -1,6 +1,8 @@
 package controller;
 
 import controller.command.*;
+import controller.command.action.*;
+import controller.command.page.*;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Yuliia Tesliuk
  */
 
-@WebServlet("/")
+@WebServlet("/servlet/*")
 public class FrontServlet extends HttpServlet {
     private Map<String, Command> commands = new ConcurrentHashMap<>();
     private static ServletContext context;
@@ -34,6 +36,7 @@ public class FrontServlet extends HttpServlet {
         commands.put("create", new SaveTaskCommand());
         commands.put("searchUser",new SearchUserCommand());
         commands.put("assign", new ChangeTaskCommand());
+        commands.put("addWatcher", new AddWatcherCommand());
         //TODO: add new commands to map
     }
 
@@ -57,7 +60,7 @@ public class FrontServlet extends HttpServlet {
         String page = command.process(request);
 
         if (page.contains("redirect: ")) {
-            response.sendRedirect(request.getContextPath() + page.replaceAll("redirect: ", ""));
+            response.sendRedirect(request.getContextPath() + "/servlet" + page.replaceAll("redirect: ", ""));
         } else {
             request.getRequestDispatcher(page).forward(request,response);
         }
@@ -66,7 +69,7 @@ public class FrontServlet extends HttpServlet {
     private Command getCommand(HttpServletRequest request){
 
         String path = request.getRequestURI();
-        path = path.replaceAll(".*/tts/" , "");
+        path = path.replaceAll(".*servlet/" , "");
         if (path.matches(".*task-[0-9]*")){
             path = "task";
         }

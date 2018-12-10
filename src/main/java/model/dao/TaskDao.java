@@ -14,7 +14,7 @@ public interface TaskDao extends GenericDao<Task>{
 
     void createTaskUpdate(TaskUpdate record);
     void createTaskComment(Comment record);
-    void createWatcher(Task task, User user);
+    void createWatcher(Task task, long userId);
 
 
     List<Task> findActiveTasksByCreator(long userId);

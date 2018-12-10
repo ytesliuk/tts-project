@@ -1,5 +1,6 @@
-package controller.command;
+package controller.command.action;
 
+import controller.command.Command;
 import model.entity.*;
 import model.service.TaskService;
 

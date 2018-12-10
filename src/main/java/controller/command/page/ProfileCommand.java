@@ -1,5 +1,6 @@
-package controller.command;
+package controller.command.page;
 
+import controller.command.Command;
 import model.entity.User;
 import model.entity.User.Role;
 import controller.ServletUtility;

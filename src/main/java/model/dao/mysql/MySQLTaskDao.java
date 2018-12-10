@@ -6,7 +6,6 @@ import model.dao.mapper.TaskMapper;
 import model.entity.*;
 
 import java.sql.*;
-import java.time.Duration;
 import java.util.*;
 
 /**
@@ -26,7 +25,7 @@ public class MySQLTaskDao implements TaskDao {
             connection.setAutoCommit(false);
             setGeneralTaskInfo(task);
             createTaskUpdate(task.getLastUpdate());
-            setWatcher(task, task.getCreator());
+            setWatcher(task, task.getCreator().getId());
 
             connection.commit();
         } catch (SQLException e) {
@@ -49,9 +48,9 @@ public class MySQLTaskDao implements TaskDao {
     }
 
     @Override
-    public void createWatcher(Task task, User user){
+    public void createWatcher(Task task, long userId){
         try {
-            setWatcher(task, user);
+            setWatcher(task, userId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -238,10 +237,10 @@ public class MySQLTaskDao implements TaskDao {
         updateTask.execute();
     }
 
-    private void setWatcher(Task entity, User user) throws SQLException {
+    private void setWatcher(Task entity, long userId) throws SQLException {
         PreparedStatement addWatcher = connection.prepareStatement(properties.getProperty("addWatcher"));
         addWatcher.setLong(1, entity.getId());
-        addWatcher.setLong(2, user.getId());
+        addWatcher.setLong(2, userId);
         addWatcher.execute();
     }
 
