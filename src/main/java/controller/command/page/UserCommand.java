@@ -21,8 +21,8 @@ public class UserCommand implements Command {
     public String process(HttpServletRequest request) {
         setTaskLists(request);
 
-        request.setAttribute("assigned", taskListAssigned);
-        request.setAttribute("initiated", taskListInitiated);
+        request.setAttribute("taskListAssigned", taskListAssigned);
+        request.setAttribute("taskListInitiated", taskListInitiated);
 
         return "/WEB-INF/user.jsp";
     }

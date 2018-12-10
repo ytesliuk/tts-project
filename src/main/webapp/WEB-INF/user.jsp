@@ -27,32 +27,34 @@
 <body>
 <%@include file="menu.jsp" %>
 <!-- Page Content -->
-<div id="page-wrapper">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Blank</h1>
-                <a href="${pageContext.request.contextPath}/servlet/logout">Logout</a>
-                <a href="${pageContext.request.contextPath}/servlet/new">task-4</a>
-
-                <br/>
-                <label>Name: <c:out value="${sessionScope.user.firstName} ${sessionScope.user.lastName}"/></label>
-                <label>Department: <c:out value="${sessionScope.user.department}"/></label>
-                <label>Position: <c:out value="${sessionScope.user.position}"/></label>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header"><c:out value="${sessionScope.user.firstName} ${sessionScope.user.lastName}"/></h1>
+            <h4>
+                <label>Department: <c:out value="${sessionScope.user.department}"/></label><br/>
+                <label>Position: <c:out value="${sessionScope.user.position}"/></label><br/>
                 <label>email: <c:out value="${sessionScope.user.email}"/></label>
+            </h4>
+            <br/>
 
-                <br/>
+            <div style="float:left; width:80%;">
+                <div class="panel-body">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-pills">
+                        <li class="active"><a href="#initiator" data-toggle="tab">Initiated tasks</a>
+                        </li>
+                        <li><a href="#owner" data-toggle="tab">Owned tasks</a>
+                        </li>
+                        <li><a href="#watcher" data-toggle="tab">Watched tasks</a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
 
-                <div style="float:left; width:80%;">
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Assigned tasks:
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover" id="assigned_tasks">
+                        <div class="tab-pane fade in active" id="initiator">
+                            <div class="table-responsive table-bordered">
+                                <table class="table">
                                     <thead>
                                     <tr>
                                         <th width="80px">Task ID</th>
@@ -62,27 +64,25 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach var="task" items="${requestScope.assignedTask}">
-                                    <tr class="odd gradeX">
-                                        <td><a href="${pageContext.request.contextPath}/servlet/task-${task.id}"><c:out value="${task.id}"/></a></td>
-                                        <td><a href="${pageContext.request.contextPath}/servlet/task-${task.id}"><c:out value="${task.title}"/></a></td>
-                                        <td><c:out value="${task.lastUpdate.status}"/></td>
-                                        <td><c:out value="${task.createTime}"/></td>
-                                    </tr>
-                                    </tbody>
+                                    <c:forEach var="task" items="${requestScope.taskListInitiated}">
+                                        <tr class="odd gradeX">
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/servlet/task-${task.id}"><c:out
+                                                        value="${task.id}"/></a></td>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/servlet/task-${task.id}"><c:out
+                                                        value="${task.title}"/></a></td>
+                                            <td><c:out value="${task.lastUpdate.status}"/></td>
+                                            <td><c:out value="${task.createTime}"/></td>
+                                        </tr>
                                     </c:forEach>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Created tasks:
-                        </div>
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover" id="created_tasks">
+                        <div class="tab-pane fade" id="owner">
+                            <div class="table-responsive table-bordered">
+                                <table class="table">
                                     <thead>
                                     <tr>
                                         <th width="80px">Task ID</th>
@@ -92,15 +92,48 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach var="task" items="${requestScope.createdTask}">
-                                    <tr class="odd gradeX">
-                                        <td><a href="${pageContext.request.contextPath}/servlet/task-${task.id}"><c:out value="${task.id}"/></a></td>
-                                        <td><a href="${pageContext.request.contextPath}/servlet/task-${task.id}"><c:out value="${task.title}"/></a></td>
-                                        <td><c:out value="${task.lastUpdate.status}"/></td>
-                                        <td><c:out value="${task.createTime}"/></td>
-                                    </tr>
-                                    </tbody>
+                                    <c:forEach var="task" items="${requestScope.taskListAssigned}">
+                                        <tr class="odd gradeX">
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/servlet/task-${task.id}"><c:out
+                                                        value="${task.id}"/></a></td>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/servlet/task-${task.id}"><c:out
+                                                        value="${task.title}"/></a></td>
+                                            <td><c:out value="${task.lastUpdate.status}"/></td>
+                                            <td><c:out value="${task.createTime}"/></td>
+                                        </tr>
                                     </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="watcher">
+                            <div class="table-responsive table-bordered">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th width="80px">Task ID</th>
+                                        <th width="500px">Title</th>
+                                        <th width="120px">Status</th>
+                                        <th width="200px">Create Time</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="task" items="${requestScope.taskListWatched}">
+                                        <tr class="odd gradeX">
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/servlet/task-${task.id}"><c:out
+                                                        value="${task.id}"/></a></td>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/servlet/task-${task.id}"><c:out
+                                                        value="${task.title}"/></a></td>
+                                            <td><c:out value="${task.lastUpdate.status}"/></td>
+                                            <td><c:out value="${task.createTime}"/></td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
