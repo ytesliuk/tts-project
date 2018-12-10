@@ -32,8 +32,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Blank</h1>
-                <a href="${pageContext.request.contextPath}/logout">Logout</a>
-                <a href="${pageContext.request.contextPath}/new">task-4</a>
+                <a href="${pageContext.request.contextPath}/servlet/logout">Logout</a>
+                <a href="${pageContext.request.contextPath}/servlet/new">task-4</a>
 
                 <br/>
                 <label>Name: <c:out value="${sessionScope.user.firstName} ${sessionScope.user.lastName}"/></label>
@@ -64,8 +64,8 @@
                                     <tbody>
                                     <c:forEach var="task" items="${requestScope.assignedTask}">
                                     <tr class="odd gradeX">
-                                        <td><a href="${pageContext.request.contextPath}/task-${task.id}"><c:out value="${task.id}"/></a></td>
-                                        <td><a href="${pageContext.request.contextPath}/task-${task.id}"><c:out value="${task.title}"/></a></td>
+                                        <td><a href="${pageContext.request.contextPath}/servlet/task-${task.id}"><c:out value="${task.id}"/></a></td>
+                                        <td><a href="${pageContext.request.contextPath}/servlet/task-${task.id}"><c:out value="${task.title}"/></a></td>
                                         <td><c:out value="${task.lastUpdate.status}"/></td>
                                         <td><c:out value="${task.createTime}"/></td>
                                     </tr>
@@ -94,8 +94,8 @@
                                     <tbody>
                                     <c:forEach var="task" items="${requestScope.createdTask}">
                                     <tr class="odd gradeX">
-                                        <td><a href="${pageContext.request.contextPath}/task-${task.id}"><c:out value="${task.id}"/></a></td>
-                                        <td><a href="${pageContext.request.contextPath}/task-${task.id}"><c:out value="${task.title}"/></a></td>
+                                        <td><a href="${pageContext.request.contextPath}/servlet/task-${task.id}"><c:out value="${task.id}"/></a></td>
+                                        <td><a href="${pageContext.request.contextPath}/servlet/task-${task.id}"><c:out value="${task.title}"/></a></td>
                                         <td><c:out value="${task.lastUpdate.status}"/></td>
                                         <td><c:out value="${task.createTime}"/></td>
                                     </tr>

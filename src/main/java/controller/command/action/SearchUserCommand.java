@@ -1,6 +1,9 @@
-package controller.command;
+package controller.command.action;
 
 
+import controller.ServletUtility;
+import controller.command.Command;
+import controller.SessionAttributeRetention;
 import model.entity.Task;
 import model.entity.User;
 import model.service.TaskService;
@@ -8,13 +11,16 @@ import model.service.TaskService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class SearchUserCommand implements Command{
+public class SearchUserCommand implements Command {
     private  List<User> searchResult;
 
     @Override
     public String process(HttpServletRequest request) {
+        String searchList = request.getParameter("searchList");
         search(request);
-        request.getSession().setAttribute("userList", searchResult);
+
+        ServletUtility.setSessionAttribute(request.getSession(),searchList, searchResult,
+                SessionAttributeRetention.FULL_REQUEST);
 
         return "redirect: /task-" + ((Task) request.getSession().getAttribute("task")).getId();
     }

@@ -26,9 +26,9 @@ public class TaskService {
         }
     }
 
-    public void addWatcher(Task task, User user){
+    public void addWatcher(Task task, long userId){
         try(TaskDao taskDao = daoFactory.createTaskDao()) {
-            taskDao.createWatcher(task, user);
+            taskDao.createWatcher(task, userId);
         }
     }
 

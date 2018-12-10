@@ -1,5 +1,6 @@
-package controller.command;
+package controller.command.page;
 
+import controller.command.Command;
 import model.entity.User;
 import model.entity.User.Role;
 import controller.ServletUtility;
@@ -11,7 +12,7 @@ import java.util.Objects;
 /**
  * @author Yuliia Tesliuk
  */
-public class LoginCommand implements Command{
+public class LoginCommand implements Command {
     @Override
     public String process(HttpServletRequest request) {
         forceLogOut(request);

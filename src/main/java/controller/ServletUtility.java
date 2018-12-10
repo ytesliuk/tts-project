@@ -6,9 +6,8 @@ import model.entity.User.Role;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * @author Yuliia Tesliuk
@@ -44,6 +43,8 @@ public class ServletUtility {
         session.setAttribute("userName", user.getLogin());
         session.setAttribute("userRole", user.getRole());
         session.setAttribute("userId", user.getId());
+        Map<String, SessionAttributeRetention> sessionAttributes = new HashMap<>();
+        session.setAttribute("sessionAttributes", sessionAttributes);
     }
 
     private static Map<String,HttpSession> getLoggedUsers() {
@@ -67,5 +68,26 @@ public class ServletUtility {
 
     public static long getUserId(HttpServletRequest request) {
         return (long) request.getSession().getAttribute("userId");
+    }
+
+    public static void setSessionAttribute(HttpSession session, String attrName, Object attr, SessionAttributeRetention retention){
+        session.setAttribute(attrName, attr);
+        HashMap<String, SessionAttributeRetention> sessionAttributes = (HashMap<String, SessionAttributeRetention>)session.getAttribute("sessionAttributes");
+        sessionAttributes.put(attrName, retention);
+        session.setAttribute("sessionAttributes", sessionAttributes);
+
+    }
+
+    public static void cleanSession(HttpSession session, SessionAttributeRetention retention) {
+        HashMap<String, SessionAttributeRetention> sessionAttributes = (HashMap<String, SessionAttributeRetention>) session.getAttribute("sessionAttributes");
+
+        for(String s : sessionAttributes.keySet()) {
+            if(sessionAttributes.get(s).equals(retention)){
+                session.removeAttribute(s);
+                sessionAttributes.remove(s);
+            }
+        }
+
+        session.setAttribute("sessionAttributes", sessionAttributes);
     }
 }

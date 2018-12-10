@@ -1,5 +1,6 @@
-package controller.command;
+package controller.command.page;
 
+import controller.command.Command;
 import model.entity.Comment;
 import model.entity.Task;
 import model.service.TaskService;
@@ -25,7 +26,7 @@ public class TaskCommand implements Command {
     }
 
     private void setTask(HttpServletRequest request) {
-        long id = Long.parseLong(request.getRequestURI().replaceAll(".*/tts/task-",""));
+        long id = Long.parseLong(request.getRequestURI().replaceAll(".*/task-",""));
         task = taskService.findTask(id);
         comments = taskService.getTaskComments(task);
     }
