@@ -3,6 +3,7 @@ package controller.command.page;
 import controller.command.Command;
 import model.entity.Comment;
 import model.entity.Task;
+import model.entity.TaskUpdate;
 import model.service.TaskService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,8 @@ public class TaskCommand implements Command {
 
         List<Comment> comments = setComments(request, task);
         request.setAttribute("comments", comments);
+        request.setAttribute("statuses", TaskUpdate.Status.values());
+        request.setAttribute("categories", TaskUpdate.Category.values());
 
         return "/WEB-INF/task.jsp";
     }

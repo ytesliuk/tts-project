@@ -1,6 +1,7 @@
 package controller.command.page;
 
 import controller.command.Command;
+import model.entity.TaskUpdate;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +13,7 @@ public class NewTaskCommand implements Command {
     public String process(HttpServletRequest request) {
 
         request.setAttribute("page","new_task");
+        request.setAttribute("categories", TaskUpdate.Category.values());
 
         return "/WEB-INF/newTask.jsp";
     }
