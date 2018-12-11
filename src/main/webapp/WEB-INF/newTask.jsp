@@ -41,15 +41,13 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <form role="form">
+                            <form role="form" action="${pageContext.request.contextPath}/servlet/create">
                                 <div class="form-group">
                                     <label>Category</label>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control" name="category">
+                                        <c:forEach var="category" items="${requestScope.categories}">
+                                        <option><c:out value="${category}"/></option>
+                                        </c:forEach>
                                     </select>
                                 </div>
                                 <div class='col-lg-12' >
@@ -58,28 +56,28 @@
                                 <div class="form-group">
                                     <label>Priority</label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="Low" checked>Low
+                                        <input type="radio" name="priority" id="optionsRadiosInline1" value="Low" checked>Low
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="Medium">Medium
+                                        <input type="radio" name="priority" id="optionsRadiosInline2" value="Medium">Medium
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="High">High
+                                        <input type="radio" name="priority" id="optionsRadiosInline3" value="High">High
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline4" value="Critical">Critical
+                                        <input type="radio" name="priority" id="optionsRadiosInline4" value="Critical">Critical
                                     </label>
                                 </div>
                                 <div class="form-group">
                                     <label>Title</label>
-                                    <input class="form-control">
+                                    <input class="form-control" name="title">
                                 </div>
                                 <div class='col-lg-12' >
                                     <hr style="border-color:#005f8d">
                                 </div>
                                 <div class="form-group">
                                     <label>Description</label>
-                                    <textarea class="form-control" rows="6"></textarea>
+                                    <textarea class="form-control" rows="6" name="description"></textarea>
                                 </div>
                                 <div class='col-lg-12' >
                                     <hr style="border-color:#005f8d"><br/>

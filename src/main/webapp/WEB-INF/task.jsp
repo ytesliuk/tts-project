@@ -124,9 +124,9 @@
                                                     <select class="form-control" name="category">
                                                         <option selected><c:out
                                                                 value="${sessionScope.task.lastUpdate.category}"/></option>
-                                                        <option>Category</option>
-                                                        <option>OPR</option>
-                                                        <option>IT</option>
+                                                        <c:forEach var="category" items="${requestScope.categories}">
+                                                            <option><c:out value="${category.name}"/></option>
+                                                        </c:forEach>
                                                     </select>
                                                 </div>
                                             </div>
@@ -149,9 +149,9 @@
                                                     <select class="form-control" name="status">
                                                         <option selected><c:out
                                                                 value="${sessionScope.task.lastUpdate.status}"/></option>
-                                                        <option>Category</option>
-                                                        <option>OPR</option>
-                                                        <option>IT</option>
+                                                        <c:forEach var="status" items="${requestScope.statuses}">
+                                                            <option><c:out value="${status}"/></option>
+                                                        </c:forEach>
                                                     </select>
                                                 </div>
                                             </div>
