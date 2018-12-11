@@ -51,7 +51,7 @@ public class TaskMapper {
 
     private TaskUpdate taskUpdateMapping(ResultSet rs) throws SQLException {
         TaskUpdate tu = TaskUpdate.builder()
-                .category(rs.getString("category"))
+                .category(TaskUpdate.Category.valueOf(rs.getString("category")))
                 .status(TaskUpdate.Status.valueOf(rs.getString("status")))
                 .spentTime(Duration.ofMinutes(rs.getLong("spent_time")))
                 .owner(Optional.ofNullable(new UserService().findUser((rs.getLong("owner_id"))))
