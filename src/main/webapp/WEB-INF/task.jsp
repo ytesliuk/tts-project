@@ -93,11 +93,7 @@
                                               action="${pageContext.request.contextPath}/servlet/assign">
                                             <table class="table table-hover">
                                                 <c:if test="${sessionScope.userListAssign != null}">
-                                                    <<<<<<< HEAD
                                                     <thead>
-                                                    =======
-                                                    <thead>
-                                                    >>>>>>> view
                                                     <tr>
                                                         <th>Name</th>
                                                         <th>Department</th>
@@ -160,7 +156,9 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <button type="submit" class="btn btn-success">Save</button>
+                                                <div class="panel-body">
+                                                <button type="submit" class="btn btn-success btn-block">Save</button>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>

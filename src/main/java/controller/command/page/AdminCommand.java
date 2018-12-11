@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 public class AdminCommand implements Command {
     @Override
     public String process(HttpServletRequest request) {
+        request.setAttribute("page","profile");
+
         return "/WEB-INF/admin.jsp";
     }
 }

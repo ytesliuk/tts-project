@@ -57,7 +57,7 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th width="80px">Task ID</th>
+                                        <th width="80px">ID</th>
                                         <th width="500px">Title</th>
                                         <th width="120px">Status</th>
                                         <th width="200px">Create Time</th>

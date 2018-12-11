@@ -23,6 +23,7 @@ public class UserCommand implements Command {
 
         request.setAttribute("taskListAssigned", taskListAssigned);
         request.setAttribute("taskListInitiated", taskListInitiated);
+        request.setAttribute("page","profile");
 
         return "/WEB-INF/user.jsp";
     }

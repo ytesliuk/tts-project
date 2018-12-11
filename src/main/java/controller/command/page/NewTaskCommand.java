@@ -11,6 +11,8 @@ public class NewTaskCommand implements Command {
     @Override
     public String process(HttpServletRequest request) {
 
+        request.setAttribute("page","new_task");
+
         return "/WEB-INF/newTask.jsp";
     }
 }
