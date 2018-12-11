@@ -152,7 +152,7 @@ public class MySQLTaskDao implements TaskDao {
     private PreparedStatement setChangeableTaskInfo(TaskUpdate record) throws SQLException {
         PreparedStatement taskOtherInfo = setGeneralTaskRecordQuery(record);
 
-        taskOtherInfo.setString(5, record.getCategory());
+        taskOtherInfo.setString(5, record.getCategory().toString());
         if(record.getOwner() != null){
             taskOtherInfo.setLong(6, record.getOwner().getId());
         }

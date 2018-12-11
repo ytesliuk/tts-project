@@ -36,7 +36,7 @@ public class SaveTaskCommand implements Command {
         task.setLastUpdate(TaskUpdate.builder()
                 .status(TaskUpdate.Status.OPEN)
                 .task(task)
-                .category(request.getParameter("category"))
+                .category(TaskUpdate.Category.valueOf(request.getParameter("category")))
                 .recorder((User)request.getSession().getAttribute("user"))
                 .recordTime(now)
                 .build());

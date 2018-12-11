@@ -32,7 +32,7 @@ public class ChangeTaskCommand implements Command {
 
         update = new TaskUpdate(task.getLastUpdate());
         Optional.ofNullable(request.getParameter("comment")).ifPresent(update::setComment);
-        Optional.ofNullable(request.getParameter("category")).ifPresent(update::setCategory);
+        Optional.ofNullable(request.getParameter("category")).ifPresent(x -> update.setCategory(TaskUpdate.Category.valueOf(x)));
         Optional.ofNullable(request.getParameter("status")).ifPresent(x -> update.setStatus(TaskUpdate.Status.valueOf(x)));
         Optional.ofNullable(request.getParameter("assignee")).ifPresent(x -> update.setOwner(
                 ((List<User>)request.getSession().getAttribute("userList")).stream()

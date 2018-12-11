@@ -14,15 +14,17 @@ import java.time.Instant;
 @Setter
 public class TaskUpdate extends TaskRecord {
     public enum Status{OPEN,REOPEN,ASSIGNED, IN_PROGRESS,RESOLVED,CLOSED,ON_HOLD}
+    public enum Category{Technical_Support,OPR,Access,Accounting,Other}
+
 
     private User owner;
     private Status status;
     private Duration spentTime;
-    private String category;
+    private Category category;
 
     @Builder
     public TaskUpdate(long id, Task task, Instant recordTime, String comment,
-                      User recorder, User owner, Status status, Duration spentTime, String category) {
+                      User recorder, User owner, Status status, Duration spentTime, Category category) {
         super(id, task, recordTime, comment, recorder);
         this.owner = owner;
         this.status = status;
@@ -40,7 +42,7 @@ public class TaskUpdate extends TaskRecord {
 
     @Override
     public String toString() {
-        return "TaskUpdate{" + super.toString() + "owner=" + owner + ", status=" + status + ", spentTime=" + spentTime + ", category='" + category + '\'' + '}';
+        return "TaskUpdate{" + super.toString() + "owner=" + owner + ", status=" + status + ", spentTime=" + spentTime + ", category=" + category + '\'' + '}';
     }
 
 
