@@ -39,7 +39,7 @@ public class MySQLUserDao implements UserDao {
 
             ResultSet rs = statement.getGeneratedKeys();
             if(rs.next()){
-                entity.setId(rs.getInt("GENERATED_KEY"));
+                entity.setId(rs.getLong("GENERATED_KEY"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

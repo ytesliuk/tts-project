@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Yuliia Tesliuk
@@ -17,58 +18,45 @@ public class ServletUtility {
     private static ServletContext context = FrontServlet.getContext();
 
     public static void logIn(HttpServletRequest request, User user) {
-        Map<String,HttpSession> loggedUsers = getLoggedUsers();
-        String login = user.getLogin();
+        Map<Long,HttpSession> loggedUsers = getLoggedUsers();
+        long userId = user.getId();
 
-        if(loggedUsers.containsKey(login)){
-            loggedUsers.get(login).invalidate();
+        if(loggedUsers.containsKey(userId)){
+            loggedUsers.get(userId).invalidate();
         }
 
-        loggedUsers.put(login,request.getSession());
+        loggedUsers.put(userId,request.getSession());
         setLoggedUsers(loggedUsers);
 
         sessionSetup(request, user);
     }
 
     public static void logOut(HttpSession session) {
-        Map<String,HttpSession> loggedUsers = getLoggedUsers();
-        loggedUsers.remove(getUserName(session));
+        Map<Long,HttpSession> loggedUsers = getLoggedUsers();
+        loggedUsers.remove(getUserId(session));
         setLoggedUsers(loggedUsers);
-        session.removeAttribute("userName");
-        session.removeAttribute("userRole");
         session.removeAttribute("userId");
     }
 
     private static void sessionSetup(HttpServletRequest request, User user) {
         HttpSession session = request.getSession();
-        session.setAttribute("userName", user.getLogin());
-        session.setAttribute("userRole", user.getRole());
         session.setAttribute("userId", user.getId());
         Map<String, SessionAttributeRetention> sessionAttributes = new HashMap<>();
         session.setAttribute("sessionAttributes", sessionAttributes);
     }
 
-    private static Map<String,HttpSession> getLoggedUsers() {
-        return (Map<String, HttpSession>) context.getAttribute("loggedUsers");
+    private static Map<Long,HttpSession> getLoggedUsers() {
+        return (Map<Long, HttpSession>) context.getAttribute("loggedUsers");
     }
-    private static void setLoggedUsers(Map<String,HttpSession> loggedUsers) {
+    private static void setLoggedUsers(Map<Long,HttpSession> loggedUsers) {
         context.setAttribute("loggedUsers", loggedUsers);
     }
 
-    public static String getUserName(HttpServletRequest request) {
-        return (String) request.getSession().getAttribute("userName");
-    }
-
-    public static String getUserName(HttpSession session) {
-        return (String) session.getAttribute("userName");
-    }
-
-    public static Role getUserRole(HttpServletRequest request) {
-        return (Role) request.getSession().getAttribute("userRole");
-    }
-
     public static long getUserId(HttpServletRequest request) {
-        return (long) request.getSession().getAttribute("userId");
+        return (long)(Optional.ofNullable(request.getSession().getAttribute("userId")).orElse(0L));
+    }
+    public static long getUserId(HttpSession session) {
+        return (long)(Optional.ofNullable(session.getAttribute("userId")).orElse(0L));
     }
 
     public static void setSessionAttribute(HttpSession session, String attrName, Object attr, SessionAttributeRetention retention){

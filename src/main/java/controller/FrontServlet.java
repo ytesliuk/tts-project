@@ -25,7 +25,7 @@ public class FrontServlet extends HttpServlet {
     public void init(ServletConfig servletConfig){
         context = servletConfig.getServletContext();
 
-        Map<String,HttpSession> loggedUsers = new ConcurrentHashMap<>();
+        Map<Long,HttpSession> loggedUsers = new ConcurrentHashMap<>();
         context.setAttribute("loggedUsers", loggedUsers);
 
         commands.put("login", new LoginCommand());

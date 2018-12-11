@@ -31,7 +31,7 @@ public class LoginCommand implements Command {
      * @param request needed to retrieve the session.
      */
     private void forceLogOut(HttpServletRequest request) {
-        if(Objects.nonNull(ServletUtility.getUserName(request))){
+        if(ServletUtility.getUserId(request) != 0){
             ServletUtility.logOut(request.getSession());
         }
     }

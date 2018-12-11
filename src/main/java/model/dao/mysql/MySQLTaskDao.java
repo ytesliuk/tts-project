@@ -43,7 +43,7 @@ public class MySQLTaskDao implements TaskDao {
 
         ResultSet rs = pr.getGeneratedKeys();
         if (rs.next()) {
-            task.setId(rs.getInt("GENERATED_KEY"));
+            task.setId(rs.getLong("GENERATED_KEY"));
         }
     }
 
@@ -164,7 +164,7 @@ public class MySQLTaskDao implements TaskDao {
         taskOtherInfo.execute();
         ResultSet other = taskOtherInfo.getGeneratedKeys();
         if (other.next()) {
-            record.setId(other.getInt("GENERATED_KEY"));
+            record.setId(other.getLong("GENERATED_KEY"));
         }
         return taskOtherInfo;
     }

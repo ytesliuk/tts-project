@@ -21,7 +21,7 @@ public class TaskMapper {
         UserMapper userMapper = new UserMapper();
         try {
             task = Task.builder()
-                    .id(rs.getInt("task_id"))
+                    .id(rs.getLong("task_id"))
                     .title(rs.getString("title"))
                     .description(rs.getString("description"))
                     .createTime(rs.getTimestamp("create_time").toInstant())

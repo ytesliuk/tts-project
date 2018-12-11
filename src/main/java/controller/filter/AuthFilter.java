@@ -45,10 +45,7 @@ public class AuthFilter implements Filter {
     private boolean generalAccessCheckIsPassed() {
         Properties pr = new PropertiesLoader().getLoadedProperties("generalAccessPages.properties");
         boolean isGeneralPath = Boolean.parseBoolean(pr.getProperty(path));
-        if( !isGeneralPath && Objects.isNull(session.getAttribute("userId"))){
-            return false;
-        }
-        return true;
+        return isGeneralPath || !Objects.isNull(session.getAttribute("userId"));
     }
 
     private void taskAccessCheck() {

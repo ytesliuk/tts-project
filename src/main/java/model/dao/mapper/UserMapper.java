@@ -14,7 +14,7 @@ public class UserMapper {
     public User mapping(ResultSet rs) {
         try {
             user = User.builder()
-                    .id(rs.getInt("user_id"))
+                    .id(rs.getLong("user_id"))
                     .firstName(rs.getString("first_name"))
                     .lastName(rs.getString("last_name"))
                     .department(User.Department.valueOf(rs.getString("department")))
