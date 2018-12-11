@@ -4,20 +4,18 @@ package controller.command.action;
 import controller.ServletUtility;
 import controller.SessionAttributeRetention;
 import controller.command.Command;
-import model.entity.Task;
-import model.entity.User;
+import model.entity.*;
 import model.service.TaskService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class SearchUserCommand implements Command {
-    private  List<User> searchResult;
 
     @Override
     public String process(HttpServletRequest request) {
         String searchList = request.getParameter("searchList");
-        search(request);
+        List<User> searchResult = search(request);
 
         ServletUtility.setSessionAttribute(request.getSession(),searchList, searchResult,
                 SessionAttributeRetention.FULL_REQUEST);
@@ -25,8 +23,10 @@ public class SearchUserCommand implements Command {
         return "redirect: /task-" + ((Task) request.getSession().getAttribute("task")).getId();
     }
 
-    private void search(HttpServletRequest request) {
+    private List<User> search(HttpServletRequest request) {
+        List<User> searchResult;
         String searchValue;
+
         String criteria = request.getParameter("searchCriteria");
         if(criteria.equals("byDepartment")){
             searchValue = request.getParameter("department");
@@ -35,5 +35,6 @@ public class SearchUserCommand implements Command {
             searchValue = request.getParameter("name");
             searchResult = new TaskService().getUsersByName(searchValue, true);
         }
+        return  searchResult;
     }
 }

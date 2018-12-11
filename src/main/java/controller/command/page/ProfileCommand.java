@@ -12,12 +12,10 @@ import javax.servlet.http.HttpServletRequest;
  * @author Yuliia Tesliuk
  */
 public class ProfileCommand implements Command {
-    private User user;
 
     @Override
     public String process(HttpServletRequest request) {
-        setUser(request);
-        request.getSession().setAttribute("user", user);
+        User user = (User) request.getSession().getAttribute("user");
 
         Role role = user.getRole();
 
@@ -28,10 +26,5 @@ public class ProfileCommand implements Command {
         }
 
         return "redirect: /login";
-    }
-
-    private void setUser(HttpServletRequest request) {
-        long userId = ServletUtility.getUserId(request);
-        user = new UserService().findUser(userId);
     }
 }
