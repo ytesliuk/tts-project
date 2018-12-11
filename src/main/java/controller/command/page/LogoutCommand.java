@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 public class LogoutCommand implements Command {
     @Override
     public String process(HttpServletRequest request) {
+
         ServletUtility.logOut(request.getSession());
         return "redirect: /";
+
     }
 }

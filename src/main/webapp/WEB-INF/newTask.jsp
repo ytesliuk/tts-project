@@ -7,6 +7,8 @@
 <html>
 
 <head>
+    <title>TTS - New Task</title>
+
     <!-- Bootstrap Core CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
@@ -45,6 +47,7 @@
                                 <div class="form-group">
                                     <label>Category</label>
                                     <select class="form-control" name="category">
+                                        <option disabled selected value style="display:none"> -- select category -- </option>
                                         <c:forEach var="category" items="${requestScope.categories}">
                                         <option><c:out value="${category}"/></option>
                                         </c:forEach>

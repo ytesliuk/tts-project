@@ -7,6 +7,8 @@
 <html>
 
 <head>
+    <title>TTS - Task</title>
+
     <!-- Bootstrap Core CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
@@ -122,10 +124,9 @@
                                             <div id="category" class="panel-collapse collapse">
                                                 <div class="panel-body">
                                                     <select class="form-control" name="category">
-                                                        <option selected><c:out
-                                                                value="${sessionScope.task.lastUpdate.category}"/></option>
                                                         <c:forEach var="category" items="${requestScope.categories}">
-                                                            <option><c:out value="${category.name}"/></option>
+                                                        <option <c:if test="${category == sessionScope.task.lastUpdate.category}"> select </c:if>
+                                                            ><c:out value="${category}"/></option>
                                                         </c:forEach>
                                                     </select>
                                                 </div>
@@ -147,10 +148,9 @@
                                             <div id="status" class="panel-collapse collapse">
                                                 <div class="panel-body">
                                                     <select class="form-control" name="status">
-                                                        <option selected><c:out
-                                                                value="${sessionScope.task.lastUpdate.status}"/></option>
                                                         <c:forEach var="status" items="${requestScope.statuses}">
-                                                            <option><c:out value="${status}"/></option>
+                                                            <option <c:if test="${status == sessionScope.task.lastUpdate.status}"> select </c:if>
+                                                            ><c:out value="${status}"/></option>
                                                         </c:forEach>
                                                     </select>
                                                 </div>

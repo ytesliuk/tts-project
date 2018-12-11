@@ -17,11 +17,11 @@ public class LoginCommand implements Command {
     public String process(HttpServletRequest request) {
         forceLogOut(request);
 
-        String name = request.getParameter("name");
-        String password = request.getParameter("password");
+        User user = authorization(request);
 
-        User user = authorization(name, password);
         ServletUtility.logIn(request, user);
+
+        request.getSession().setAttribute("user", user);
 
         return "redirect: /profile";
     }
@@ -36,7 +36,9 @@ public class LoginCommand implements Command {
         }
     }
 
-    private User authorization(String name, String password) {
+    private User authorization(HttpServletRequest request) {
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
         return new SecurityService().userValidation(name, password);
     }
 

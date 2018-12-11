@@ -4,6 +4,8 @@
 
 <html>
 <head>
+    <title>TTS - Profile</title>
+
     <!-- Bootstrap Core CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 

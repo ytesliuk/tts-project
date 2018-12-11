@@ -11,26 +11,27 @@ import java.time.Duration;
 import java.util.*;
 
 public class ChangeTaskCommand implements Command {
-    private Task task;
-    private TaskUpdate update;
 
     @Override
     public String process(HttpServletRequest request) {
-        task = (Task)request.getSession().getAttribute("task");
+        Task task = (Task)request.getSession().getAttribute("task");
 
-        getTaskUpdateFromRequest(request);
-        task.setLastUpdate(update);
-        new TaskService().saveTaskUpdate(update);
-
+        changeTask(request, task);
 
         ServletUtility.cleanSession(request.getSession(), SessionAttributeRetention.FULL_REQUEST);
 
         return "redirect: /task-" + task.getId();
     }
 
-    private TaskUpdate getTaskUpdateFromRequest(HttpServletRequest request) {
+    private void changeTask(HttpServletRequest request, Task task) {
+        TaskUpdate update = getTaskUpdateFromRequest(request, task);
+        task.setLastUpdate(update);
+        new TaskService().saveTaskUpdate(update);
+    }
 
-        update = new TaskUpdate(task.getLastUpdate());
+    private TaskUpdate getTaskUpdateFromRequest(HttpServletRequest request, Task task) {
+
+        TaskUpdate update = new TaskUpdate(task.getLastUpdate());
         Optional.ofNullable(request.getParameter("comment")).ifPresent(update::setComment);
         Optional.ofNullable(request.getParameter("category")).ifPresent(x -> update.setCategory(TaskUpdate.Category.valueOf(x)));
         Optional.ofNullable(request.getParameter("status")).ifPresent(x -> update.setStatus(TaskUpdate.Status.valueOf(x)));

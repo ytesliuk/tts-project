@@ -13,21 +13,20 @@ import java.time.Instant;
  * @author Yuliia Tesliuk
  */
 public class SaveTaskCommand implements Command {
-    private Task task;
 
     @Override
     public String process(HttpServletRequest request) {
-        saveTask(request);
+        Task task = saveTask(request);
 
         request.setAttribute("task", task);
         return "redirect: /task-" + task.getId();
 
     }
 
-    private void saveTask(HttpServletRequest request) {
+    private Task saveTask(HttpServletRequest request) {
         Instant now = Instant.now();
 
-        task = Task.builder()
+        Task task = Task.builder()
                 .title(request.getParameter("title"))
                 .createTime(now)
                 .creator((User)request.getSession().getAttribute("user"))
@@ -41,5 +40,7 @@ public class SaveTaskCommand implements Command {
                 .recordTime(now)
                 .build());
         new TaskService().createTask(task);
+
+        return task;
     }
 }
