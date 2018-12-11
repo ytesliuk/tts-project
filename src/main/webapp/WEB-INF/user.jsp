@@ -1,10 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %>
 
 
-<html>
+<html lang="${sessionScope.lang}">
 <head>
+    <meta charset="UTF-8">
     <title>TTS - Profile</title>
+    <fmt:setLocale value="${sessionScope.lang}"/>
+    <fmt:setBundle basename="messages" var="lang"/>
+    <fmt:requestEncoding value="UTF-8" />
+
 
     <!-- Bootstrap Core CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -34,8 +40,8 @@
         <div class="col-lg-12">
             <h1 class="page-header"><c:out value="${sessionScope.user.firstName} ${sessionScope.user.lastName}"/></h1>
             <h4>
-                <label>Department: <c:out value="${sessionScope.user.department}"/></label><br/>
-                <label>Position: <c:out value="${sessionScope.user.position}"/></label><br/>
+                <label><fmt:message key="department" bundle="${lang}"/>: <c:out value="${sessionScope.user.department}"/></label><br/>
+                <label><fmt:message key="position" bundle="${lang}"/>: <c:out value="${sessionScope.user.position}"/></label><br/>
                 <label>email: <c:out value="${sessionScope.user.email}"/></label>
             </h4>
             <br/>
@@ -44,11 +50,11 @@
                 <div class="panel-body">
                     <!-- Nav tabs -->
                     <ul class="nav nav-pills">
-                        <li class="active"><a href="#initiator" data-toggle="tab">Initiated tasks</a>
+                        <li class="active"><a href="#initiator" data-toggle="tab"><fmt:message key="initiatedTasks" bundle="${lang}"/></a>
                         </li>
-                        <li><a href="#owner" data-toggle="tab">Owned tasks</a>
+                        <li><a href="#owner" data-toggle="tab"><fmt:message key="assignedTasks" bundle="${lang}"/></a>
                         </li>
-                        <li><a href="#watcher" data-toggle="tab">Watched tasks</a>
+                        <li><a href="#watcher" data-toggle="tab"><fmt:message key="watchedTasks" bundle="${lang}"/></a>
                         </li>
                     </ul>
                     <!-- Tab panes -->
@@ -60,9 +66,9 @@
                                     <thead>
                                     <tr>
                                         <th width="80px">ID</th>
-                                        <th width="500px">Title</th>
-                                        <th width="120px">Status</th>
-                                        <th width="200px">Create Time</th>
+                                        <th width="500px"><fmt:message key="title" bundle="${lang}"/></th>
+                                        <th width="120px"><fmt:message key="status" bundle="${lang}"/></th>
+                                        <th width="200px"><fmt:message key="createDate" bundle="${lang}"/></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -87,10 +93,10 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th width="80px">Task ID</th>
-                                        <th width="500px">Title</th>
-                                        <th width="120px">Status</th>
-                                        <th width="200px">Create Time</th>
+                                        <th width="80px">ID</th>
+                                        <th width="500px"><fmt:message key="title" bundle="${lang}"/></th>
+                                        <th width="120px"><fmt:message key="status" bundle="${lang}"/></th>
+                                        <th width="200px"><fmt:message key="createDate" bundle="${lang}"/></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -116,10 +122,10 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th width="80px">Task ID</th>
-                                        <th width="500px">Title</th>
-                                        <th width="120px">Status</th>
-                                        <th width="200px">Create Time</th>
+                                        <th width="80px">ID</th>
+                                        <th width="500px"><fmt:message key="title" bundle="${lang}"/></th>
+                                        <th width="120px"><fmt:message key="status" bundle="${lang}"/></th>
+                                        <th width="200px"><fmt:message key="createDate" bundle="${lang}"/></th>
                                     </tr>
                                     </thead>
                                     <tbody>

@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +12,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <fmt:setLocale value="${sessionScope.lang}"/>
+    <fmt:setBundle basename="messages" var="lang"/>
+    <fmt:requestEncoding value="UTF-8"/>
 
     <title>TTS - Login</title>
 
@@ -41,22 +46,29 @@
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <div class="login-panel panel panel-default">
+                <div class="div_lang" style=" width: 30%">
+                    <a href="?lang=en"><img src="${pageContext.request.contextPath}/resources/flags/blank.gif" class="flag flag-england" alt="en"></a>
+                    <a href="?lang=Ua_ua"><img src="${pageContext.request.contextPath}/resources/flags/blank.gif" class="flag flag-england" alt="ua"></a>
+                </div>
                 <div class="panel-heading">
-                    <h3 class="panel-title">Please Sign In</h3>
+                    <h3 class="panel-title"><fmt:message key="please_log_in" bundle="${lang}"/></h3>
                 </div>
                 <div class="panel-body">
                     <form role="form" method="POST" action="${pageContext.request.contextPath}/servlet/login">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="login" name="name" type="text" autofocus>
+                                <input class="form-control" placeholder="<fmt:message key="login" bundle="${lang}"/>"
+                                       name="name" type="text" autofocus>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="password" name="password" type="password"
+                                <input class="form-control" placeholder="<fmt:message key="password" bundle="${lang}"/>"
+                                       name="password" type="password"
                                        value="">
                             </div>
                             <br/>
                             <!-- Change this to a button or input when using this as a form -->
-                            <input type="submit" value="Login" class="btn btn-lg btn-success btn-block">
+                            <input type="submit" value="<fmt:message key="login_button" bundle="${lang}"/>"
+                                   class="btn btn-lg btn-success btn-block">
                         </fieldset>
                     </form>
                 </div>
