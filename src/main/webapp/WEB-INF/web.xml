@@ -17,13 +17,13 @@
   <!--</context-param>-->
 
   <error-page>
-    <exception-type>model.service.UserNotFoundException</exception-type>
+    <exception-type>com.javacourse.model.service.UserNotFoundException</exception-type>
     <location>/WEB-INF/loginErrorPage.jsp</location>
   </error-page>
 
 
   <error-page>
-    <exception-type>model.service.AccessForbiddenException</exception-type>
+    <exception-type>com.javacourse.model.service.AccessForbiddenException</exception-type>
     <location>/WEB-INF/accessErrorPage.jsp</location>
   </error-page>
 
