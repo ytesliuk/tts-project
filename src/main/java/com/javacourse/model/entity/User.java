@@ -12,7 +12,7 @@ import lombok.Setter;
 public class User {
 
     public enum Role {UNKNOWN, ADMIN, USER}
-    public enum Department{Accounting, OPR, IT_Support}
+    public enum Department{ACCOUNTING, OPR, IT_SUPPORT, DEVELOPMENT}
 
     @Setter
     private long id;

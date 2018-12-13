@@ -1,9 +1,7 @@
 package com.javacourse.model.dao.mapper;
 
-import com.javacourse.model.entity.Comment;
-import com.javacourse.model.entity.Task;
-import com.javacourse.model.entity.TaskRecord;
-import com.javacourse.model.entity.TaskUpdate;
+import com.javacourse.model.dao.UncheckedSQLException;
+import com.javacourse.model.entity.*;
 import com.javacourse.model.service.UserService;
 
 import java.sql.ResultSet;
@@ -33,41 +31,39 @@ public class TaskMapper {
              task.setLastUpdate(taskUpdateMapping(rs));
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
         return task;
     }
 
     public Comment commentMapping(ResultSet rs) {
         try {
-            Comment comment = Comment.builder().build();
-            setGeneralTaskRecordFields(comment, rs);
+            TaskCommentBuilder builder = new TaskCommentBuilder();
+            setGeneralTaskRecordFields(builder, rs);
             //TODO: quot comment;
-            return comment;
+            return builder.build();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
     }
 
     private TaskUpdate taskUpdateMapping(ResultSet rs) throws SQLException {
-        TaskUpdate tu = TaskUpdate.builder()
-                .category(TaskUpdate.Category.valueOf(rs.getString("category")))
-                .status(TaskUpdate.Status.valueOf(rs.getString("status")))
-                .spentTime(Duration.ofMinutes(rs.getLong("spent_time")))
-                .owner(Optional.ofNullable(new UserService().findUser((rs.getLong("owner_id"))))
+        TaskUpdateBuilder builder = new TaskUpdateBuilder();
+        setGeneralTaskRecordFields(builder,rs);
+
+        return  builder.setCategory(TaskUpdate.Category.valueOf(rs.getString("category")))
+                .setStatus(TaskUpdate.Status.valueOf(rs.getString("status")))
+                .setSpentTime(Duration.ofMinutes(rs.getLong("spent_time")))
+                .setOwner(Optional.ofNullable(new UserService().findUser((rs.getLong("owner_id"))))
                         .orElse(null))
                 .build();
-
-        setGeneralTaskRecordFields(tu,rs);
-        task.getId();
-        return tu;
     }
 
-    private void setGeneralTaskRecordFields(TaskRecord taskRecord, ResultSet rs) throws SQLException {
-        taskRecord.setRecorder(new UserService().findUser(rs.getLong("recorder_id")));
-        taskRecord.setRecordTime(rs.getTimestamp("update_time").toInstant());
-        taskRecord.setComment(rs.getString("comment"));
-        taskRecord.setTask(task);
+    private void setGeneralTaskRecordFields(TaskRecordBuilder builder, ResultSet rs) throws SQLException {
+        builder.setRecorder(new UserService().findUser(rs.getLong("recorder_id")))
+                .setRecordTime(rs.getTimestamp("update_time").toInstant())
+                .setComment(rs.getString("comment"))
+                .setTask(task);
     }
 
 }

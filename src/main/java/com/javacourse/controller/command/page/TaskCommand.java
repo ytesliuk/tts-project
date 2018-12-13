@@ -20,7 +20,7 @@ public class TaskCommand implements Command {
         Task task = setTask(request);
         request.getSession().setAttribute("task", task);
 
-        List<Comment> comments = setComments(request, task);
+        List<Comment> comments = setComments(task);
         request.setAttribute("comments", comments);
         request.setAttribute("statuses", TaskUpdate.Status.values());
         request.setAttribute("categories", TaskUpdate.Category.values());
@@ -34,7 +34,7 @@ public class TaskCommand implements Command {
     }
 
 
-    private List<Comment> setComments(HttpServletRequest request, Task task) {
+    private List<Comment> setComments(Task task) {
         return taskService.getTaskComments(task);
     }
 

@@ -1,9 +1,7 @@
 package com.javacourse.controller.command.action;
 
 import com.javacourse.controller.command.Command;
-import com.javacourse.model.entity.Task;
-import com.javacourse.model.entity.TaskUpdate;
-import com.javacourse.model.entity.User;
+import com.javacourse.model.entity.*;
 import com.javacourse.model.service.TaskService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,13 +30,15 @@ public class SaveTaskCommand implements Command {
                 .creator((User)request.getSession().getAttribute("user"))
                 .description(request.getParameter("description"))
                 .build();
-        task.setLastUpdate(TaskUpdate.builder()
-                .status(TaskUpdate.Status.OPEN)
-                .task(task)
-                .category(TaskUpdate.Category.valueOf(request.getParameter("category")))
-                .recorder((User)request.getSession().getAttribute("user"))
-                .recordTime(now)
+        task.setLastUpdate(new TaskUpdateBuilder()
+                .setCategory(TaskUpdate.Category.valueOf(request.getParameter("category")))
+                .setStatus(TaskUpdate.Status.OPEN)
+                .setRecordTime(now)
+                .setComment(request.getParameter("comment"))
+                .setTask(task)
+                .setRecorder((User)request.getSession().getAttribute("user"))
                 .build());
+
         new TaskService().createTask(task);
 
         return task;

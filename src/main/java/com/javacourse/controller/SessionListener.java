@@ -13,7 +13,7 @@ import java.util.Map;
 @WebListener
 public class SessionListener implements HttpSessionListener {
 
-    private final Logger LOG = LoggerFactory.getLogger(SessionListener.class);
+    private final Logger logger = LoggerFactory.getLogger(SessionListener.class);
 
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
@@ -22,8 +22,8 @@ public class SessionListener implements HttpSessionListener {
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-        LOG.debug("Number of logged users before session destroy: " + ((Map<Long, HttpSession>) FrontServlet.getContext().getAttribute("loggedUsers")).size());
+        logger.debug("Number of logged users before session destroy: " + ((Map<Long, HttpSession>) FrontServlet.getContext().getAttribute("loggedUsers")).size());
         ServletUtility.logOut(httpSessionEvent.getSession());
-        LOG.debug("Number of logged users after session destroy: " + ((Map<Long, HttpSession>) FrontServlet.getContext().getAttribute("loggedUsers")).size());
+        logger.debug("Number of logged users after session destroy: " + ((Map<Long, HttpSession>) FrontServlet.getContext().getAttribute("loggedUsers")).size());
     }
 }

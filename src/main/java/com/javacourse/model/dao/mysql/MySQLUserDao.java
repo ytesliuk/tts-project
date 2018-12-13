@@ -1,6 +1,7 @@
 package com.javacourse.model.dao.mysql;
 
 import com.javacourse.controller.util.PropertiesLoader;
+import com.javacourse.model.dao.UncheckedSQLException;
 import com.javacourse.model.dao.UserDao;
 import com.javacourse.model.dao.mapper.UserMapper;
 import com.javacourse.model.entity.User;
@@ -24,8 +25,7 @@ public class MySQLUserDao implements UserDao {
 
     @Override
     public void create(User entity) {
-        try {
-            PreparedStatement statement = connection.prepareStatement(properties.getProperty("createUser"), Statement.RETURN_GENERATED_KEYS);
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("createUser"), Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, entity.getFirstName());
             statement.setString(2, entity.getLastName());
             statement.setString(3, entity.getDepartment().toString());
@@ -42,14 +42,13 @@ public class MySQLUserDao implements UserDao {
                 entity.setId(rs.getLong("GENERATED_KEY"));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
     }
 
     @Override
     public User findByID(long id) {
-        try {
-            PreparedStatement statement = connection.prepareStatement(properties.getProperty("findUserByID"));
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("findUserByID"))){
             statement.setLong(1, id);
 
             ResultSet rs = statement.executeQuery();
@@ -57,15 +56,14 @@ public class MySQLUserDao implements UserDao {
                 return new UserMapper().mapping(rs);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
         return null;  //TODO change
     }
 
 
     public User findByLoginAndPassword(String login, String password){
-        try {
-            PreparedStatement statement = connection.prepareStatement(properties.getProperty("findUserByLoginAndPassword"));
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("findUserByLoginAndPassword"))){
             statement.setString(1, login);
             statement.setString(2, password);
             ResultSet rs = statement.executeQuery();
@@ -75,7 +73,7 @@ public class MySQLUserDao implements UserDao {
                 throw new UserNotFoundException("Wrong login or password. Please try again");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
     }
 
@@ -85,9 +83,8 @@ public class MySQLUserDao implements UserDao {
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(properties.getProperty("findAllUsers"));
-            UserMapper mapper = new UserMapper();
             if(rs.next()){
-                users.add(mapper.mapping(rs));
+                users.add(new UserMapper().mapping(rs));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -97,8 +94,7 @@ public class MySQLUserDao implements UserDao {
 
     @Override
     public void update(User entity) {
-        try {
-            PreparedStatement statement = connection.prepareStatement(properties.getProperty("updateUser"));
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("updateUser"))){
             statement.setString(1, entity.getFirstName());
             statement.setString(2, entity.getLastName());
             statement.setString(3, entity.getDepartment().toString());
@@ -109,25 +105,22 @@ public class MySQLUserDao implements UserDao {
 
             statement.executeQuery();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
     }
 
     @Override
     public void delete(long id) {
-        try {
-            PreparedStatement statement = connection.prepareStatement(properties.getProperty("deleteUser"));
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("deleteUser"))){
             statement.setLong(1, id);
-
             statement.executeQuery();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
     }
 
     public boolean checkAccess(long taskId, long userId){
-        try {
-            PreparedStatement statement = connection.prepareStatement(properties.getProperty("checkTaskAccess"));
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("checkTaskAccess"))){
             statement.setLong(1, taskId);
             statement.setLong(2, userId);
             ResultSet rs = statement.executeQuery();
@@ -135,7 +128,7 @@ public class MySQLUserDao implements UserDao {
                 return true;
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
         return false;
     }
@@ -143,21 +136,18 @@ public class MySQLUserDao implements UserDao {
     @Override
     public List<User> findByLastName(String lastName, boolean partialMatch) {
         List<User> users = new ArrayList<>();
-        try {
-            PreparedStatement statement;
-            statement = connection.prepareStatement(properties.getProperty(
-                    (partialMatch) ? "findUsersByLastNamePartialMatch" : "findUsersByLastName"));
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty(
+                    (partialMatch) ? "findUsersByLastNamePartialMatch" : "findUsersByLastName"))){
 
             statement.setString(1,"%" + lastName + "%");
             statement.executeQuery();
 
             ResultSet rs = statement.getResultSet();
-
             while(rs.next()){
                 users.add(new UserMapper().mapping(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
         return users;
     }
@@ -165,17 +155,14 @@ public class MySQLUserDao implements UserDao {
     @Override
     public List<User> findByDepartment(User.Department department) {
         List<User> users = new ArrayList<>();
-        try {
-            PreparedStatement statement = connection.prepareStatement(properties.getProperty("findUsersByDepartment"));
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("findUsersByDepartment"))){
             statement.setString(1,department.toString());
-
             ResultSet rs = statement.executeQuery();
-
             while(rs.next()){
                 users.add(new UserMapper().mapping(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
         return users;    }
 
@@ -184,7 +171,7 @@ public class MySQLUserDao implements UserDao {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw  new RuntimeException(e);
+            throw  new UncheckedSQLException(e);
         }
     }
 }

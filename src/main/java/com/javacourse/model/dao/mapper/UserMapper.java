@@ -9,11 +9,10 @@ import java.sql.SQLException;
  * @author Yuliia Tesliuk
  */
 public class UserMapper {
-    private User user;
 
     public User mapping(ResultSet rs) {
         try {
-            user = User.builder()
+            return  User.builder()
                     .id(rs.getLong("user_id"))
                     .firstName(rs.getString("first_name"))
                     .lastName(rs.getString("last_name"))
@@ -26,6 +25,5 @@ public class UserMapper {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return user;
     }
 }

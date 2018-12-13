@@ -85,8 +85,7 @@
                                                            name="name">
                                                 </label>
                                                 <br/><br/>
-                                                <button type="submit"
-                                                        class="btn btn-outline btn-primary btn-block">
+                                                <button type="submit" class="btn btn-primary btn-block">
                                                     Search
                                                 </button>
                                             </div>
@@ -98,6 +97,7 @@
                                             <c:if test="${sessionScope.userListAssign != null}">
                                                 <thead>
                                                 <tr>
+                                                    <th></th>
                                                     <th>Name</th>
                                                     <th>Department</th>
                                                     <th>Position</th>
@@ -108,14 +108,17 @@
                                             <tbody>
                                             <c:forEach var="user" items="${sessionScope.userListAssign}">
                                                 <tr>
+                                                    <label>
+                                                        <td><input type="radio" class="custom-control-input" id="defaultUnchecked" name="assignee" value="${user.id}"/></td>
+                                                    </label>
                                                     <td><c:out value="${user.lastName}"/></td>
                                                     <td><c:out value="${user.department}"/></td>
                                                     <td><c:out value="${user.position}"/></td>
-                                                    <td>
-                                                        <button type="button" name="assignee"
-                                                                value="${user.id}"
-                                                                class="btn btn-default btn-circle"></button>
-                                                    </td>
+                                                    <%--<td>--%>
+                                                        <%--<input type="button" name="assignee"--%>
+                                                                <%--value="${user.id}"--%>
+                                                                <%--class="btn btn-default btn-circle"/>--%>
+                                                    <%--</td>--%>
 
                                                 </tr>
                                             </c:forEach>
@@ -127,7 +130,7 @@
                                                 <select class="form-control" name="category">
                                                     <c:forEach var="category" items="${requestScope.categories}">
                                                         <option <c:if
-                                                                test="${category == sessionScope.task.lastUpdate.category}"> select </c:if>
+                                                                test="${category == sessionScope.task.lastUpdate.category}"> selected </c:if>
                                                         ><c:out value="${category}"/></option>
                                                     </c:forEach>
                                                 </select>
@@ -152,7 +155,7 @@
                                                 <select class="form-control" name="status">
                                                     <c:forEach var="status" items="${requestScope.statuses}">
                                                         <option <c:if
-                                                                test="${status == sessionScope.task.lastUpdate.status}"> select </c:if>
+                                                                test="${status == sessionScope.task.lastUpdate.status}"> selected </c:if>
                                                         ><c:out value="${status}"/></option>
                                                     </c:forEach>
                                                 </select>
@@ -192,8 +195,7 @@
                                                    name="name">
                                         </label>
                                         <br/><br/>
-
-                                        <button type="submit" class="btn btn-outline btn-primary btn-block">
+                                        <button type="submit" class="btn btn-primary btn-block">
                                             Search
                                         </button>
                                     </div>

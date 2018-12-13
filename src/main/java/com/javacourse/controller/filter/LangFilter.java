@@ -17,7 +17,7 @@ public class LangFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String lang = request.getParameter("lang");
-        Optional.ofNullable(lang).ifPresent((x) -> request.getSession().setAttribute("lang",x));
+        Optional.ofNullable(lang).ifPresent( x -> request.getSession().setAttribute("lang",x));
 
         filterChain.doFilter(servletRequest,servletResponse);
     }

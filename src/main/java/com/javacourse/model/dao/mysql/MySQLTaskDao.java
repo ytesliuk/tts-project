@@ -2,6 +2,7 @@ package com.javacourse.model.dao.mysql;
 
 import com.javacourse.controller.util.PropertiesLoader;
 import com.javacourse.model.dao.TaskDao;
+import com.javacourse.model.dao.UncheckedSQLException;
 import com.javacourse.model.dao.mapper.TaskMapper;
 import com.javacourse.model.entity.*;
 
@@ -29,21 +30,24 @@ public class MySQLTaskDao implements TaskDao {
 
             connection.commit();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
     }
 
     private void setGeneralTaskInfo(Task task) throws SQLException {
-        PreparedStatement pr = connection.prepareStatement(properties.getProperty("createTask"), Statement.RETURN_GENERATED_KEYS);
-        pr.setString(1, task.getTitle());
-        pr.setString(2, task.getDescription());
-        pr.setTimestamp(3, Timestamp.from(task.getCreateTime()));
-        pr.setLong(4, task.getCreator().getId());
-        pr.execute();
+        try (PreparedStatement pr = connection.prepareStatement(properties.getProperty("createTask"), Statement.RETURN_GENERATED_KEYS)) {
+            pr.setString(1, task.getTitle());
+            pr.setString(2, task.getDescription());
+            pr.setTimestamp(3, Timestamp.from(task.getCreateTime()));
+            pr.setLong(4, task.getCreator().getId());
+            pr.execute();
 
-        ResultSet rs = pr.getGeneratedKeys();
-        if (rs.next()) {
-            task.setId(rs.getLong("GENERATED_KEY"));
+            ResultSet rs = pr.getGeneratedKeys();
+            if (rs.next()) {
+                task.setId(rs.getLong("GENERATED_KEY"));
+            }
+        } catch (SQLException e){
+            throw new UncheckedSQLException(e);
         }
     }
 
@@ -52,7 +56,7 @@ public class MySQLTaskDao implements TaskDao {
         try {
             setWatcher(task, userId);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
     }
 
@@ -64,7 +68,7 @@ public class MySQLTaskDao implements TaskDao {
             updateTask(record.getTask());  //save the LastUpdate id to the task table
             connection.commit();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
     }
 
@@ -77,15 +81,14 @@ public class MySQLTaskDao implements TaskDao {
             }
             taskOtherInfo.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
     }
 
     @Override
     public List<Task> findActiveTasksByCreator(long userId) {
-        try {
+        try (PreparedStatement findTasks = connection.prepareStatement(properties.getProperty("findActiveTasksByCreator"))){
             List<Task> activeTask = new ArrayList<>();
-            PreparedStatement findTasks = connection.prepareStatement(properties.getProperty("findActiveTasksByCreator"));
             findTasks.setLong(1,userId);
             ResultSet rs = findTasks.executeQuery();
             TaskMapper mapper = new TaskMapper();
@@ -94,15 +97,14 @@ public class MySQLTaskDao implements TaskDao {
             }
             return activeTask;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
     }
 
     @Override
     public List<Task> findActiveTasksByOwner(long userId) {
-        try {
+        try (PreparedStatement findTasks = connection.prepareStatement(properties.getProperty("findActiveTasksByOwner"))){
             List<Task> activeTask = new ArrayList<>();
-            PreparedStatement findTasks = connection.prepareStatement(properties.getProperty("findActiveTasksByOwner"));
             findTasks.setLong(1,userId);
             findTasks.executeQuery();
             ResultSet rs = findTasks.executeQuery();
@@ -112,15 +114,14 @@ public class MySQLTaskDao implements TaskDao {
             }
             return activeTask;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
     }
 
     @Override
     public List<Comment> findAllTaskComment(long id) {
-        try {
+        try (PreparedStatement findTasks = connection.prepareStatement(properties.getProperty("findTaskComments"))){
             List<Comment> comments = new ArrayList<>();
-            PreparedStatement findTasks = connection.prepareStatement(properties.getProperty("findTaskComments"));
             findTasks.setLong(1,id);
             ResultSet rs = findTasks.executeQuery();
             TaskMapper mapper = new TaskMapper();
@@ -129,7 +130,7 @@ public class MySQLTaskDao implements TaskDao {
             }
             return comments;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
     }
 
@@ -153,6 +154,7 @@ public class MySQLTaskDao implements TaskDao {
         PreparedStatement taskOtherInfo = setGeneralTaskRecordQuery(record);
 
         taskOtherInfo.setString(5, record.getCategory().toString());
+
         if(record.getOwner() != null){
             taskOtherInfo.setLong(6, record.getOwner().getId());
         }
@@ -171,8 +173,7 @@ public class MySQLTaskDao implements TaskDao {
 
     @Override
     public Task findByID(long id) {
-        try {
-            PreparedStatement statement = connection.prepareStatement(properties.getProperty("findTaskByID"));
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("findTaskByID"))) {
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             TaskMapper taskMapper = new TaskMapper();
@@ -180,7 +181,7 @@ public class MySQLTaskDao implements TaskDao {
                 return taskMapper.mapping(rs);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
         //TODO
         return null;
@@ -194,11 +195,11 @@ public class MySQLTaskDao implements TaskDao {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(properties.getProperty("findAllTasks"));
             TaskMapper taskMapper = new TaskMapper();
-            if (rs.next()) {
+            while (rs.next()) {
                 tasks.add(taskMapper.mapping(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
         return tasks;
     }
@@ -216,7 +217,7 @@ public class MySQLTaskDao implements TaskDao {
 
             statement.executeQuery();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedSQLException(e);
         }
     }
 
@@ -225,7 +226,7 @@ public class MySQLTaskDao implements TaskDao {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw  new RuntimeException();
+            throw new UncheckedSQLException(e);
         }
     }
 
