@@ -13,7 +13,7 @@ import java.time.Instant;
 @Getter
 public class TaskUpdate extends TaskRecord {
     public enum Status{OPEN,REOPEN,ASSIGNED, IN_PROGRESS,RESOLVED,CLOSED,ON_HOLD}
-    public enum Category{TECHNICAL_SUPPORT,OPR,ACCESS,ACCOUNTING,OTHER}
+    public enum Category{DEVELOPMENT,TECHNICAL_SUPPORT,OPR,ACCESS,ACCOUNTING,OTHER}
 
     private User owner;
     private Status status;

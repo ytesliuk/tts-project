@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * @author Yuliia Tesliuk
  */
-@WebFilter("/*")
+@WebFilter(urlPatterns = {"/index.jsp", "/servlet/*"})
 public class EncodingFilter implements Filter {
 
     @Override

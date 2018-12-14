@@ -36,7 +36,7 @@ public class TaskMapper {
         return task;
     }
 
-    public Comment commentMapping(ResultSet rs) {
+    public TaskComment commentMapping(ResultSet rs) {
         try {
             TaskCommentBuilder builder = new TaskCommentBuilder();
             setGeneralTaskRecordFields(builder, rs);

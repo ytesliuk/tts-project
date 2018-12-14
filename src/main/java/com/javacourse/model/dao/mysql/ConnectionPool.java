@@ -21,6 +21,7 @@ class ConnectionPool {
             synchronized (ConnectionPool.class){
                 if (dataSource == null){
                     dataSource = new BasicDataSource();
+                    dataSource.setDriverClassName("com.mysql.jdbc.Driver");
                     dataSource.setUrl(URL);
                     dataSource.setUsername(USERNAME);
                     dataSource.setPassword(PASSWORD);

@@ -47,8 +47,8 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="login-panel panel panel-default">
                 <div class="div_lang" style=" width: 30%">
-                    <a href="?lang=en"><img src="${pageContext.request.contextPath}/resources/flags/blank.gif" class="flag flag-england" alt="en"></a>
-                    <a href="?lang=Ua_ua"><img src="${pageContext.request.contextPath}/resources/flags/blank.gif" class="flag flag-england" alt="ua"></a>
+                    <a href="?lang=en"><img src="${pageContext.request.contextPath}/resources/flags/blank.gif" class="flag flag-england" alt="en">en</a>
+                    <a href="?lang=Ua_ua"><img src="${pageContext.request.contextPath}/resources/flags/blank.gif" class="flag flag-england" alt="ua">ua</a>
                 </div>
                 <div class="panel-heading">
                     <h3 class="panel-title"><fmt:message key="please_log_in" bundle="${lang}"/></h3>

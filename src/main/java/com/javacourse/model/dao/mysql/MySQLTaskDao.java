@@ -73,7 +73,7 @@ public class MySQLTaskDao implements TaskDao {
     }
 
     @Override
-    public void createTaskComment(Comment comment) {
+    public void createTaskComment(TaskComment comment) {
         try {
             PreparedStatement taskOtherInfo = setGeneralTaskRecordQuery(comment);
             if(comment.getQuoteComment() != null){
@@ -119,9 +119,9 @@ public class MySQLTaskDao implements TaskDao {
     }
 
     @Override
-    public List<Comment> findAllTaskComment(long id) {
+    public List<TaskComment> findAllTaskComment(long id) {
         try (PreparedStatement findTasks = connection.prepareStatement(properties.getProperty("findTaskComments"))){
-            List<Comment> comments = new ArrayList<>();
+            List<TaskComment> comments = new ArrayList<>();
             findTasks.setLong(1,id);
             ResultSet rs = findTasks.executeQuery();
             TaskMapper mapper = new TaskMapper();

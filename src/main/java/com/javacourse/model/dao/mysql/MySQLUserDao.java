@@ -6,11 +6,11 @@ import com.javacourse.model.dao.UserDao;
 import com.javacourse.model.dao.mapper.UserMapper;
 import com.javacourse.model.entity.User;
 import com.javacourse.model.service.UserNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * @author Yuliia Tesliuk
@@ -18,6 +18,7 @@ import java.util.Properties;
 public class MySQLUserDao implements UserDao {
     private Connection connection;
     private Properties properties = new PropertiesLoader().getLoadedProperties("mysql_requests.properties");
+    private Logger logger = LoggerFactory.getLogger(MySQLUserDao.class);
 
     public MySQLUserDao(Connection connection) {
         this.connection = connection;
@@ -119,18 +120,25 @@ public class MySQLUserDao implements UserDao {
         }
     }
 
-    public boolean checkAccess(long taskId, long userId){
+    @Override
+    public List<Long> checkAccess(long taskId){
         try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("checkTaskAccess"))){
             statement.setLong(1, taskId);
-            statement.setLong(2, userId);
             ResultSet rs = statement.executeQuery();
-            if(rs.next()){
-                return true;
+            Set<Long> authorizedUserIds = new HashSet<>();
+            if (rs.next()){
+                authorizedUserIds.add(rs.getLong("creator_id"));
+                authorizedUserIds.add(rs.getLong("owner_id"));
+                authorizedUserIds.add(rs.getLong("user_id"));
             }
+            while(rs.next()){
+                authorizedUserIds.add(rs.getLong("user_id"));
+            }
+            logger.debug("users with access: {}", authorizedUserIds);
+            return new ArrayList<>(authorizedUserIds);
         } catch (SQLException e) {
             throw new UncheckedSQLException(e);
         }
-        return false;
     }
 
     @Override

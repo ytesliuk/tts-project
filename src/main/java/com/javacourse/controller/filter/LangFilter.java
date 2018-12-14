@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebFilter("/*")
+@WebFilter(urlPatterns = {"/index.jsp", "/servlet/*"})
 public class LangFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -18,7 +18,6 @@ public class LangFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String lang = request.getParameter("lang");
         Optional.ofNullable(lang).ifPresent( x -> request.getSession().setAttribute("lang",x));
-
         filterChain.doFilter(servletRequest,servletResponse);
     }
 

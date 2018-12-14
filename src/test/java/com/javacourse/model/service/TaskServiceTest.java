@@ -19,13 +19,13 @@ public class TaskServiceTest {
         assertEquals(users.size(),number);
     }
 
-    @Test
-    public void getUsersByDepartment() {
-        User.Department department = User.Department.IT_Support;
-        List<User> users = new TaskService().getUsersByDepartment(department);
-        long number = users.stream().filter((x) -> x.getDepartment().equals(department)).count();
-
-        assertTrue(number > 0);
-        assertEquals(users.size(),number);
-    }
+//    @Test
+//    public void getUsersByDepartment() {
+//        User.Department department = User.Department.IT_Support;
+//        List<User> users = new TaskService().getUsersByDepartment(department);
+//        long number = users.stream().filter((x) -> x.getDepartment().equals(department)).count();
+//
+//        assertTrue(number > 0);
+//        assertEquals(users.size(),number);
+//    }
 }

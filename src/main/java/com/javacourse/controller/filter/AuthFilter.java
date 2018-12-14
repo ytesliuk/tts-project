@@ -13,7 +13,7 @@ import java.util.Properties;
 /**
  * @author Yuliia Tesliuk
  */
-@WebFilter("/*")
+@WebFilter(urlPatterns = {"/servlet/*"})
 public class AuthFilter implements Filter {
     private String path;
     private HttpSession session;

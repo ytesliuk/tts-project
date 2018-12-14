@@ -13,11 +13,11 @@ public interface TaskDao extends GenericDao<Task>{
     List<Task> findActiveTasksByOwner(long userId);
 
     void createTaskUpdate(TaskUpdate record);
-    void createTaskComment(Comment record);
+    void createTaskComment(TaskComment record);
     void createWatcher(Task task, long userId);
 
 
     List<Task> findActiveTasksByCreator(long userId);
 
-    List<Comment> findAllTaskComment(long id);
+    List<TaskComment> findAllTaskComment(long id);
 }

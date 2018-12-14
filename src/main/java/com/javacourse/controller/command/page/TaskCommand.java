@@ -1,7 +1,7 @@
 package com.javacourse.controller.command.page;
 
 import com.javacourse.controller.command.Command;
-import com.javacourse.model.entity.Comment;
+import com.javacourse.model.entity.TaskComment;
 import com.javacourse.model.entity.Task;
 import com.javacourse.model.entity.TaskUpdate;
 import com.javacourse.model.service.TaskService;
@@ -20,7 +20,7 @@ public class TaskCommand implements Command {
         Task task = setTask(request);
         request.getSession().setAttribute("task", task);
 
-        List<Comment> comments = setComments(task);
+        List<TaskComment> comments = setComments(task);
         request.setAttribute("comments", comments);
         request.setAttribute("statuses", TaskUpdate.Status.values());
         request.setAttribute("categories", TaskUpdate.Category.values());
@@ -34,7 +34,7 @@ public class TaskCommand implements Command {
     }
 
 
-    private List<Comment> setComments(Task task) {
+    private List<TaskComment> setComments(Task task) {
         return taskService.getTaskComments(task);
     }
 

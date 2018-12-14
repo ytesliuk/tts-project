@@ -11,7 +11,7 @@ public interface UserDao extends GenericDao<User>{
 
     User findByLoginAndPassword(String login, String password);
 
-    boolean checkAccess(long taskId, long userId);
+    List<Long> checkAccess(long taskId);
 
     List<User> findByLastName(String lastName, boolean partialMatch);
 

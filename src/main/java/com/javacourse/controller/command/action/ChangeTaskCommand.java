@@ -43,9 +43,11 @@ public class ChangeTaskCommand implements Command {
         TaskUpdateBuilder builder = new TaskUpdateBuilder();
         builder.setCategory(TaskUpdate.Category.valueOf(request.getParameter("category")))
                 .setStatus(TaskUpdate.Status.valueOf(request.getParameter("status")))
+                .setOwner(task.getLastUpdate().getOwner())
                 .setTask(task)
                 .setRecorder((User)request.getSession().getAttribute("user"))
                 .setRecordTime(Instant.now());
+
 
         Optional.ofNullable(request.getParameter("comment")).ifPresent(x -> builder.setComment(
                 (x.length() > 0) ? x : null));

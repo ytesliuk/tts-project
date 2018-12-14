@@ -37,14 +37,14 @@ public class TaskService {
         }
     }
 
-    public void saveTaskComment(Comment comment){
+    public void saveTaskComment(TaskComment comment){
         try(TaskDao taskDao = daoFactory.createTaskDao()) {
             taskDao.createTaskComment(comment);
         }
     }
 
 
-    public List<Comment> getTaskComments(Task task) {
+    public List<TaskComment> getTaskComments(Task task) {
         try(TaskDao taskDao = daoFactory.createTaskDao()) {
             return taskDao.findAllTaskComment(task.getId());
         }

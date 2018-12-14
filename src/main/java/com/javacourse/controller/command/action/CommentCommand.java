@@ -23,7 +23,7 @@ public class CommentCommand implements Command {
     private void saveComment(HttpServletRequest request, Task task) {
         TaskService ts = new TaskService();
 
-        Comment comment = new TaskCommentBuilder()
+        TaskComment comment = new TaskCommentBuilder()
                 .setRecorder((User) request.getSession().getAttribute("user"))
                 .setRecordTime(Instant.now())
                 .setTask(task)

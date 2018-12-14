@@ -1,15 +1,15 @@
 package com.javacourse.model.entity;
 
 public class TaskCommentBuilder extends TaskRecordBuilder {
-    private Comment quoteComment;
+    private TaskComment quoteComment;
 
-    public TaskCommentBuilder setQuoteComment(Comment quoteComment) {
+    public TaskCommentBuilder setQuoteComment(TaskComment quoteComment) {
         this.quoteComment = quoteComment;
         return this;
     }
 
     @Override
-    public Comment build(){
-        return new Comment(id, task, recordTime, comment, recorder, quoteComment);
+    public TaskComment build(){
+        return new TaskComment(id, task, recordTime, comment, recorder, quoteComment);
     }
 }
